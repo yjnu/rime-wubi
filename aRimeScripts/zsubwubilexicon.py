@@ -1,31 +1,9 @@
-import sys
-import os
-import re
-
 # 注意: 词库最后一定要空一行
 
-def detect_language(string):
-    if re.search('[\u4e00-\u9fff]', string):
-        return "zh"
-    elif re.search('[a-zA-Z]', string):
-        return "en"
-    else:
-        return "unknown"
+import sys
+from zzutils import detect_language, get_path, open_dict, get_active_window_exe
 
-def get_path(dicType):
-    name = os.environ.get("COMPUTERNAME")
-    if name == "R5-2600X":
-        dict_path = "E:\\Program_Files\\RimeUserData\\wubi.dict.yaml"
-    else: 
-        dict_path = "D:\\Program_Files\\RimeUserData\\wubi.dict.yaml"
-    if dicType == "en":
-        dict_path = re.sub(r'wubi', 'easy_en', dict_path)        
-    return dict_path
 
-def open_dict(dict_path):
-    with open(dict_path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-    return lines
 def subwubilex(word1, dicType):
     startline = 27
     dict_path = get_path(dicType)
@@ -62,7 +40,10 @@ def subwubilex(word1, dicType):
     # print(f"startnum: {startnum}")
     # print(f"endnum: {endnum}")
     # print(updated_vocab)
-    print(f"\nsubtracted and sorted: \033[32m{word1}\033[0m")
+    if get_active_window_exe() == "AutoHotkey64":
+        print(f"deleted and sorted: {word1}")
+    else:
+        print(f"\nsubtracted and sorted: \033[32m{word1}\033[0m")
 
 def subenlex(word1, dicType):
     startline = 18
@@ -84,9 +65,15 @@ def subenlex(word1, dicType):
     
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
         file.writelines(lines[:startline] + updated_vocab)
-    print(f"\nsubtracted and sorted: \033[32m{word1}\033[0m") 
+    
+    if get_active_window_exe() == "AutoHotkey64":
+        print(f"deleted and sorted: {word1}")
+    else:
+        print(f"\nsubtracted and sorted: \033[32m{word1}\033[0m") 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding='utf-8')
+
     # 获取命令行参数
     if len(sys.argv) == 2:
         word1 = sys.argv[1]

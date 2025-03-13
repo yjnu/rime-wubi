@@ -1,17 +1,8 @@
 @echo off
 
-chcp 65001 > nul
-
 setlocal enabledelayedexpansion
 
-python "%~dp0zaddluafilter.py" %*
-
-if errorlevel 1 (
-    exit /b 1
-)
-
-echo.
-echo Sync successfully
+@REM chcp 65001 > nul
 
 if "%COMPUTERNAME%"=="R5-2600X" (
     set "num=3"
@@ -39,22 +30,18 @@ for /d %%i in ("%dirPath%\*") do (
     if not defined fullPath (
         set "fullPath=%%i\WeaselDeployer.exe"
     ) else (
-        echo More than one folder found in %dirPath%
+        echo More than one folder found in %dirPath%.
         exit /b
     )
 )
 
 if defined fullPath (
-    echo.
-    echo Deploying
-    timeout /t 1 /nobreak
-    %fullPath% /deploy
+    %fullPath% /sync
 ) else (
     echo No folder found in %dirPath%
-    exit /b
 )
 
 echo.
-echo Successfully added and redeployed
+echo User configuration is being synchronized
 
-enlocal
+endlocal

@@ -1,75 +1,8 @@
+# 词库文件最后一定要空一行
+
 import sys
-import os
-import re
-import pickle
+from zzutils import detect_language, get_path, open_dict, get_wubi_code, get_active_window_exe
 
-# 词库最后一定要空一行
-
-def detect_language(string):
-    if re.search(r'\d', string):
-        return "number"
-    elif re.search('[\u4e00-\u9fff]', string):
-        return "zh"
-    elif re.search('[a-zA-Z]', string):
-        return "en"
-    else:
-        return "unknown"
-
-def get_path(dicType):
-    name = os.environ.get("COMPUTERNAME")
-    if name == "R5-2600X":
-        dict_path = "E:\\Program_Files\\RimeUserData\\wubi.dict.yaml"
-    else: 
-        dict_path = "D:\\Program_Files\\RimeUserData\\wubi.dict.yaml"
-    if dicType == "en":
-        dict_path = re.sub(r'wubi', 'easy_en', dict_path)        
-    return dict_path
-
-def open_dict(dict_path):
-    with open(dict_path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-    return lines
-
-def load_wsdict(file_path):
-    """从 Pickle 文件加载五笔编码字典"""
-    with open(file_path, 'rb') as f:
-        wsdict = pickle.load(f)
-    return wsdict
-
-def get_wubi_code(phrase: str):
-    """根据输入的词组和五笔字典生成词组的编码"""
-    # 获取脚本的运行路径
-    script_path = os.path.abspath(__file__)
-    # 获取脚本运行的目录
-    wsdict_path = os.path.dirname(script_path)  + "\wsdict.pkl"
-    length = len(phrase)
-    wsdict = load_wsdict(wsdict_path)
-    if length == 1:
-        print("\n Please enter a phrase")
-        sys.exit(1)
-    if re.search('[a-zA-Z]', phrase) and length <= 3:
-        if length == 2:
-            print("\n Please enter a Chinese phrase")
-        if length == 3:
-            if phrase[2].isalpha() == True:
-                print("\n Please enter a Chinese phrase")
-                sys.exit(1)
-    try:
-        if length == 2:
-            # 两个字，取每个字的前两个编码
-            code = wsdict[phrase[0]][:2] + wsdict[phrase[1]][:2]
-        elif length == 3:
-            # 三个字，取前两个字第一个编码，最后一个字前两个编码
-            code = wsdict[phrase[0]][:1] + wsdict[phrase[1]][:1] + wsdict[phrase[2]][:2]
-        else:
-            # 四个及以上字，取前三个字第一个编码，最后一个字第一个编码
-            code = wsdict[phrase[0]][:1] + wsdict[phrase[1]][:1] + wsdict[phrase[2]][:1] + wsdict[phrase[-1]][:1]
-    except KeyError as e:
-        # 捕获 KeyError 异常，如果字典中没有对应的汉字编码
-        missing_char = e.args[0]
-        print(f"错误：'{missing_char}' 没有对应的五笔编码。")
-        sys.exit(1)
-    return code
 
 def addwubilex(word1, word2, word3, dicType):
     startline = 27
@@ -86,8 +19,11 @@ def addwubilex(word1, word2, word3, dicType):
         if parts[1] == word2 and len(parts) >= 3:
             if parts[0] == word1:
                 # 如果新词条完全相同，直接跳过添加
-                print(f"\nphrase: {word1} already exists, skipping addition\n"
-                        f"code:   \033[31m{word2}\033[0m\n")
+                print(f"\nphrase: {word1} already exists, skipping adding")
+                if get_active_window_exe() == "AutoHotkey64":
+                    print(f"code:   {word2}\n")   
+                else:    
+                    print(f"code:   \033[31m{word2}\033[0m\n")
                 sys.exit(1)
             else:
                 # 如果编码相同，但词条不同，增加词频
@@ -130,11 +66,15 @@ def addwubilex(word1, word2, word3, dicType):
     # print(f"endnum: {endnum}")
     # print(updated_vocab)
     # print("中断后",vocab_lines[endnum:])
-    print("\n\033[32mSuccessfully Added\033[0m\n"
-           f"phrase: {word1}\n"
-           f"code:   {word2}\n"
-           f"weight: {word3}\n"
-           f"dict:   {dicType}\n")
+    
+    if get_active_window_exe() == "AutoHotkey64":
+        print("Successfully Added")
+    else:
+        print("\n\033[32mSuccessfully Added\033[0m")
+    print(f"phrase: {word1}\n"
+          f"code:   {word2}\n"
+          f"weight: {word3}\n"
+          f"dict:   {dicType}\n")
 
 def addenlex(word1, word2, dicType):
     new_entry = f"{word1}\t{word2}"
@@ -145,8 +85,12 @@ def addenlex(word1, word2, dicType):
     new_entry = new_entry+"\n"
     if new_entry in vocab_lines:
         # 如果新词条完全相同，直接跳过添加
-        print(f"\nphrase: \033[31m{word1}\033[0m already exists, skipping addition\n"
-                f"code:   \033[31m{word2}\033[0m\n")
+        if get_active_window_exe() == "AutoHotkey64":
+            print(f"\nphrase: {word1} already exists, skipping adding\n"
+                    f"code:   {word2}\n")
+        else:    
+            print(f"\nphrase: \033[31m{word1}\033[0m already exists, skipping adding\n"
+                    f"code:   \033[31m{word2}\033[0m\n")
         sys.exit(1)
     vocab_lines.append(new_entry)
     # 按照第一个单词的字母顺序升序排序
@@ -156,12 +100,17 @@ def addenlex(word1, word2, dicType):
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
         file.writelines(updated_lines)
     
-    print("\n\033[32mSuccessfully Added\033[0m\n"
-          f"word: {word1}\n"
+    if get_active_window_exe() == "AutoHotkey64":
+        print("Successfully Added")
+    else:
+        print("\n\033[32mSuccessfully Added\033[0m")
+    print(f"word: {word1}\n"
           f"code: {word2}\n"
           f"dict: {dicType}\n")
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding='utf-8')
+
     if len(sys.argv) == 4:
         word1, word2, word3 = sys.argv[1], sys.argv[2], sys.argv[3]
     elif len(sys.argv) == 3:

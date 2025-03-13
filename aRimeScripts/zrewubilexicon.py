@@ -1,75 +1,8 @@
-import sys
-import os
-import re
-import pickle
-
 # 词库最后一定要空一行
 
-def detect_language(string):
-    if re.search(r'\d', string):
-        return "number"
-    elif re.search('[\u4e00-\u9fff]', string):
-        return "zh"
-    elif re.search('[a-zA-Z]', string):
-        return "en"
-    else:
-        return "unknown"
+import sys
+from zzutils import detect_language, get_path, open_dict, get_wubi_code, get_active_window_exe
 
-def get_path(dicType):
-    name = os.environ.get("COMPUTERNAME")
-    if name == "R5-2600X":
-        dict_path = "E:\\Program_Files\\RimeUserData\\wubi.dict.yaml"
-    else: 
-        dict_path = "D:\\Program_Files\\RimeUserData\\wubi.dict.yaml"
-    if dicType == "en":
-        dict_path = re.sub(r'wubi', 'easy_en', dict_path)        
-    return dict_path
-
-def open_dict(dict_path):
-    with open(dict_path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-    return lines
-
-def load_wsdict(file_path):
-    """从 Pickle 文件加载五笔编码字典"""
-    with open(file_path, 'rb') as f:
-        wsdict = pickle.load(f)
-    return wsdict
-
-def get_wubi_code(phrase: str):
-    """根据输入的词组和五笔字典生成词组的编码"""
-    # 获取脚本的运行路径
-    script_path = os.path.abspath(__file__)
-    # 获取脚本运行的目录
-    wsdict_path = os.path.dirname(script_path)  + "\wsdict.pkl"
-    length = len(phrase)
-    wsdict = load_wsdict(wsdict_path)
-    if length == 1:
-        print("\n Please enter a phrase")
-        sys.exit(1)
-    if re.search('[a-zA-Z]', phrase) and length <= 3:
-        if length == 2:
-            print("\n Please enter a Chinese phrase")
-        if length == 3:
-            if phrase[2].isalpha() == True:
-                print("\n Please enter a Chinese phrase")
-                sys.exit(1)
-    try:
-        if length == 2:
-            # 两个字，取每个字的前两个编码
-            code = wsdict[phrase[0]][:2] + wsdict[phrase[1]][:2]
-        elif length == 3:
-            # 三个字，取前两个字第一个编码，最后一个字前两个编码
-            code = wsdict[phrase[0]][:1] + wsdict[phrase[1]][:1] + wsdict[phrase[2]][:2]
-        else:
-            # 四个及以上字，取前三个字第一个编码，最后一个字第一个编码
-            code = wsdict[phrase[0]][:1] + wsdict[phrase[1]][:1] + wsdict[phrase[2]][:1] + wsdict[phrase[-1]][:1]
-    except KeyError as e:
-        # 捕获 KeyError 异常，如果字典中没有对应的汉字编码
-        missing_char = e.args[0]
-        print(f"错误：'{missing_char}' 没有对应的五笔编码。")
-        sys.exit(1)
-    return code
 
 def rewubilex(word1, word2, dicType="zh"):
     startline = 27     
@@ -88,10 +21,13 @@ def rewubilex(word1, word2, dicType="zh"):
 
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
         file.writelines(lines[:startline] + vocab_lines)
-    
-    print("\n\033[32mSuccessfully replaced\033[0m\n"
-           f"destword:   {word1}\n"
-           f"sourceword: {word2}")
+
+    if get_active_window_exe() == "AutoHotkey64":
+        print("Successfully replaced")
+    else: 
+        print("\n\033[32mSuccessfully replaced\033[0m")
+    print(f"destword:   {word1}\n"
+          f"sourceword: {word2}")
 
 def reenlex(word1, word2, dicType="en"):
     startline = 18      
@@ -111,11 +47,16 @@ def reenlex(word1, word2, dicType="en"):
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
         file.writelines(lines[:startline] + vocab_lines)
     
-    print("\n\033[32mSuccessfully replaced\033[0m\n"
-          f"destword:   {word1}\n"
+    if get_active_window_exe() == "AutoHotkey64":
+        print("Successfully replaced")
+    else:
+        print("\n\033[32mSuccessfully replaced\033[0m")
+    print(f"destword:   {word1}\n"
           f"sourceword: {word2}")
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding='utf-8')
+    
     if len(sys.argv) == 3:
         word1, word2 = sys.argv[1], sys.argv[2]
     else:

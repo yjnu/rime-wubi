@@ -4,14 +4,11 @@ chcp 65001 > nul
 
 setlocal enabledelayedexpansion
 
-python "%~dp0zaddluafilter.py" %*
+python "%~dp0zsubwubilexicon.py" %*
 
 if errorlevel 1 (
     exit /b 1
 )
-
-echo.
-echo Sync successfully
 
 if "%COMPUTERNAME%"=="R5-2600X" (
     set "num=3"
@@ -22,14 +19,15 @@ if "%COMPUTERNAME%"=="R5-2600X" (
 set "INI_FILE=%~dp0config.ini"
 set "lineCount=1"
 
+rem 逐行读取 ini 文件, 只读取第2行或第3行, 并提取路径
 for /f "usebackq delims=" %%a in ("%INI_FILE%") do (
     if !lineCount! equ !num! (
         for /f "tokens=2 delims== " %%b in ("%%a") do (
             set "dirPath=%%b"
         )
         goto :next
-    )
-    set /a lineCount+=1 
+    ) 
+    set /a lineCount+=1
 )
 :next
 
@@ -45,16 +43,11 @@ for /d %%i in ("%dirPath%\*") do (
 )
 
 if defined fullPath (
-    echo.
-    echo Deploying
-    timeout /t 1 /nobreak
     %fullPath% /deploy
+    @REM %fullPath% /sync
 ) else (
     echo No folder found in %dirPath%
     exit /b
 )
 
-echo.
-echo Successfully added and redeployed
-
-enlocal
+endlocal

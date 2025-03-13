@@ -1,5 +1,9 @@
 @echo off
 
+chcp 65001 > nul
+
+setlocal enabledelayedexpansion
+
 python "%~dp0zrewubilexicon.py" %*
 
 if errorlevel 1 (
@@ -7,10 +11,24 @@ if errorlevel 1 (
 )
 
 if "%COMPUTERNAME%"=="R5-2600X" (
-     set "dirPath=E:\Program_Files\Rime"
+    set "num=3"
 ) else (
-     set "dirPath=D:\Program_Files\Rime"
+    set "num=2"
 )
+
+set "INI_FILE=%~dp0config.ini"
+set "lineCount=1"
+
+for /f "usebackq delims=" %%a in ("%INI_FILE%") do (
+    if !lineCount! equ !num! (
+        for /f "tokens=2 delims== " %%b in ("%%a") do (
+            set "dirPath=%%b"
+        )
+        goto :next
+    )
+    set /a lineCount+=1 
+)
+:next
 
 SET "fullPath="
 
@@ -24,15 +42,11 @@ for /d %%i in ("%dirPath%\*") do (
 )
 
 if defined fullPath (
-    echo.
-    echo Deploying and syncing
-    timeout /t 1 /nobreak
     %fullPath% /deploy
-    %fullPath% /sync
+    @REM %fullPath% /sync
 ) else (
     echo No folder found in %dirPath%
     exit /b
 )
 
-echo.
-echo Successfully replaced, redeployed, and synced
+endlocal

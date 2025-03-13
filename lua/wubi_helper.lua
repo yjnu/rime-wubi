@@ -25,7 +25,7 @@ local function docRime(input, seg, env)
         { 'luna', '农历' },
         { 'R_Shift', '中英切换' },
         { '<C> .', '中英标点切换' },
-        { '<S> Space', '半角全角切换' },
+        { '<CS> Space', '半角全角切换' },
         { '<C> \\', '简繁切换' },
         { '<C> Enter', '清码' },
         { 'zhelp', '你懂的'},

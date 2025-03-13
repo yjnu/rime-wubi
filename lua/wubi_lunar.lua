@@ -1,4 +1,5 @@
 -- 来源: https://github.com/boomker/rime-fast-xhup/blob/main/lua/chinese_lunar.lua
+-- 输入 luna 或 lunar 后，输出农历日期
 
 -- 数字转中文
 local numerical_units = {
@@ -641,7 +642,7 @@ function T.func(input, seg, env)
     local segment = composition:back()
 
     local date1, date2 = Date2LunarDate(os.date("%Y%m%d"))
-    if (input == "luna") then
+    if (input == "luna" or input == "lunar") then
         segment.prompt = "〔" .. "农历" .. "〕"
         local lunar_date = Candidate("lunar", seg.start, seg._end, date1, "")
         lunar_date.quality = 999
