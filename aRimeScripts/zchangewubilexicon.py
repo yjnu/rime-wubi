@@ -45,7 +45,7 @@ def changewubilex(word1, word2, word3, dicType):
             break
         endnum += 1
     # 排序
-    print(updated_vocab)
+    # print(updated_vocab)
     updated_vocab.sort(key=lambda x: (x.split("\t")[2]))
     count = 0
     for i, line in enumerate(updated_vocab):
@@ -54,19 +54,22 @@ def changewubilex(word1, word2, word3, dicType):
         if w1 == word1: 
             word3 == w3
         updated_vocab[i] = f"{w1}\t{w2}\t{count}\n"
-        
+
     # 重新写回文件
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
         file.writelines(lines[:startline] + vocab_lines[:startnum] + updated_vocab + vocab_lines[endnum:])
 
     if get_active_window_exe() == "AutoHotkey64":
-        print("Successfully Changed")
+        print("Successfully Changed\n")
     else:
-        print("\n\033[32mSuccessfully Changed\033[0m")
-    print(f"phrase: {word1}\n"
-          f"code:   {word2}\n"
-          f"weight: {word3}")
-
+        print("\033[32mSuccessfully Changed\033[0m\n")
+    # print(f"phrase: {word1}\n"
+    #       f"code:   {word2}\n"
+    #       f"weight: {word3}\n")
+    
+    # 输出排序后同编码的词组
+    if len(updated_vocab) > 0:
+        print("排序后: ", [item.split("\t")[0] for item in updated_vocab])
 
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding='utf-8')
@@ -91,7 +94,7 @@ if __name__ == "__main__":
     elif dicType == "zh":
         if detect_language(word3) == "number":
             word2 = get_wubi_code(word1)
-            print(f"\n 输入词组： {word1} {word2} {word3}")
+            print(f"\n输入词组： {word1} {word2} {word3}\n")
             changewubilex(word1, word2, word3, dicType)
         else:
             print("\nError: the second parameter is not number")

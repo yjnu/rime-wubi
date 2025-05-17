@@ -2,48 +2,50 @@
 # encoding: utf-8
 
 schema:
-  schema_id: wubi
-  name: "五笔"
-  version: "5.0"
+  schema_id: wubi                                   # 方案 id, 唯一值, 建议与文件名一致
+  name: "五笔"                                       # 方案显示名称, 切换方案时显示的名字
+  version: "5.1"                                    # 方案版本号, 用于识别方案是否更新
   
-  icon: "image/zh_red.ico"                          # 右下角托盘五笔图标, 只能用 ico 格式
-  ascii_icon: "image/en_red.ico"                    # 右下角托盘英文图标
-  full_icon: "image/full_icon.ico"                  # 半角全角切换时的全角图标, 没必要添加, 几乎用不到  
-  half_icon: "image/half_icon.ico"                  # 半角全角切换时的半角图标
+  # 右下角托盘图标, 只能用 ico 格式, icon 为方案的默认图标, ascii_icon 为英文模式下的图标, full 是全角, half 是半角
+  icon: "image/zh_red.ico"
+  ascii_icon: "image/en_pink_neg.ico"
+  full_icon: "image/full_pink_neg.ico"
+  half_icon: "image/half_red.ico"
   
   author:
-    - 王永民团队
+    - 王永民 窝子
   description: |
     86 五笔, 自改一简, 个性化后不通用
   dependencies:
-    - easy_en                     # 英文词库挂载, 用于中文能输入英文
+    - easy_en                      # 英文词库挂载, 用于中文能输入英文
 
+# 配置开关, 注释 reset 时, 默认为 0
 switches:
-  - name: ascii_mode              # 输入法默认为英文  0: 中文模式   1: 英文模式 
+  - name: ascii_mode               # 输入法默认为英文  0: 中文模式   1: 英文模式 
     reset: 1                      
-    states: [ 中, En ]
-  - name: zh_trad                 # 简繁切换
-    reset: 0                      
+    states: [ 中文, En ]
+  - name: zh_trad                  # 简繁切换
     states: [ 简体, 繁体 ]
-  - name: full_shape              # 全角半角切换
-    reset: 0
+  - name: full_shape               # 全角半角切换
     states: [ 半角, 全角 ]
-  - name: ascii_punct             # 标点符号随输入法切换  
-    states: [ 。标点 ,. Punct ]    
-  - name: emoji                   # emoji 开关, 默认关闭
-    reset: 0
-    states: [ ❌, 😄 ]
-  - name: single_char             # 只显示单字开关, 默认关闭并一直关闭, 我就不是单字派
-    reset: 0
-    states: [ 词组, 单字 ]
-  - name: character_filter        # 屏蔽非常用字符开关, 默认打开
+  - name: ascii_punct              # 标点符号随输入法切换  
+    states: [ 。标点 , . Punct ]    
+  - name: emoji                    # emoji 开关, 默认关闭
+    states: [ ❌关, 😄开 ]
+  - name: character_filter         # 屏蔽非常用字符开关, 默认开启
     reset: 1
     states: [ 全集, 常用 ]
-  # - name: extended_charset      # cjk 字符集 开启需 enable_charset_filter: true    注: linux 用的
+  - name: only_three_candidates    # 候选词数量开关, 默认开启, 输入编码 4 个时, 则无限制
+    reset: 1
+    states: [ 无缺, 极简 ]
+  - name: clear_comment            # 清空注释开关, 默认开启
+    reset: 1
+    states: [ 保留, 清空 ]
+  # - name: extended_charset       # cjk 字符集 开启需下方 translator 的 enable_charset_filter 为 true
   # states: [ 常用, 扩展 ]
 
 engine:                                                # 引擎配置
-  processors:                                          # 引擎核心，处理按键消息。
+  processors:                                          # ① 第一个引擎: 处理按键消息。
     - ascii_composer                                   # 处理英文模式及中英文切换
     - recognizer                                       # 与 matcher 搭配，处理符合特定规则的输入码，如网址、反查等
     - key_binder                                       # 自定义按键处理
@@ -52,42 +54,36 @@ engine:                                                # 引擎配置
     - selector                                         # 选字处理器，处理数字选字键、上、下候选定位、换页键
     - navigator                                        # 处理输入栏内的光标移动键
     - express_editor                                   # 编辑器，处理空格、回车上屏、回退键等
-    - lua_processor@*wubi_disable_soft_cursor          # 禁用输入字母的光标  #linux 报错
-  segmentors:                                          # 识别不同内容类型，将输入码分段
+    - lua_processor@*disable_soft_cursor               # 禁用输入字母的光标  #linux 报错
+    # - lua_processor@*cs_commit                       # ctrl + space 上屏编码, 有问题, 待解决
+  segmentors:                                          # ② 第二个引擎: 识别不同内容类型，将输入码分段
     - ascii_segmentor                                  # 标识英文段落
     - matcher                                          # 标识符合特定规则的段落，如网址、反查等
     - abc_segmentor                                    # 标识常规的文字段落
     - punct_segmentor                                  # 标识句读段落
     - fallback_segmentor                               # 标识其他未标识段落
-  translators:                                         # 这批组件翻译特定类型的编码段爲一组候选文字
-    # - echo_translator                                # 没有其他候选字时，回显输入码
+  translators:                                         # ③ 第三个引擎: 将编码转换为文字
+    # 五笔四码为空时, 保留候选窗, 下面这一项开启时, 要想第五码上屏, speller 中 max_code_length 必须开启
+    # - echo_translator                                # 没有候选字时，候选显示输入码
     - punct_translator                                 # 转换标点符号
-    - reverse_lookup_translator                        # 反查翻译器，用另一种编码方案查码
     - table_translator                                 # 码表转换
-    - lua_translator@*wubi_date_translator             # 日期、时间、星期  输入 date time dati week month
-    - lua_translator@*wubi_xnumber                     # 数字大写由 zv 开头，直接转换数字为大写,  zv0x开头十六进制转换成十进制
-    - lua_translator@*wubi_calculator                  # 计算器也是 zv 开头, 使用说明在 lua 脚本中的网址内
-    - lua_translator@*wubi_provisional_english         # 临时英文   ze 开头
-    - lua_translator@*wubi_linefeed                    # 输入 zo 多行输出, linefeed 笨方法
-    - lua_translator@*wubi_lunar                       # 农历 输入 luna 直接转换  
-    - lua_translator@*wubi_unicode                     # 输入 zu, Unicode 编码转换 还加了 一个 zi symbols 符号提示
-    - lua_translator@*wubi_helper                      # 输入 help 显示快捷键信息
+    - reverse_lookup_translator                        # 反查翻译器，用另一种编码方案查码
     - history_translator@repeat_last_input             # 重复上一次输入，对应下面的 repeat_last_input
+    - lua_translator@*xnumber                          # 数字大写由 zv 开头，直接转换数字为大写,  zv0x开头十六进制转换成十进制
+    - lua_translator@*lunar                            # 农历 输入 luna 直接转换  
+    - lua_translator@*helper                           # 输入 help 显示快捷键信息, info 显示 rime 信息
+    - lua_translator@*unicode                          # 输入 zu, Unicode 编码转换 还加了 一个 zi symbols 符号提示
+    - lua_translator@*date_translator                  # 日期、时间、星期  输入 date time dati week month
+    # - lua_translator@*provisional_en                 # 输入 z 后, 回显示之后的编码, 也就是输入英文
     - table_translator@easy_en                         # 加入英文词库
-  filters:                                             # 对候选文字进行过滤
+    - lua_translator@*force_gc                         # 暴力 GC (Garbage Collection) 清理内存
+  filters:                                             # ④ 第四个引擎: 对候选项过滤
     - simplifier@tradition                             # 繁简转换
     - simplifier@emoji                                 # 输入 emoji
-    - lua_filter@*wubi_character_filter                # 常用字过滤 及 单字过滤 两个功能 #linux 报错
-    # - uniquifier                                     # 去重 
-    # - lua_filter@*wubi_auto_capitalization_filter    # 英文自动大写
-    # - lua_filter@*wubi_single_char_first_filter      # 单字优先
-
-easy_en:                                               # 英文词库设定
-  dictionary: easy_en
-  enable_sentence: false
-  enable_user_dict: false
-  comment_format:
-    - xform/.+//
+    - lua_filter@*character_filter                     # 常用字与低俗词过滤   易错词加读音   #linux 报错
+    - lua_filter@*only_three_candidates                # 输入编码小于四个时, 只显示前三个候选，清空更改注释
+    # - uniquifier                                     # 候选词去重
+    # - single_char_filter                             # 候选只留单字
 
 # 通过 opencc 实现, 在配置目录中的 opencc 文件夹内的三个文件：emoji.json   emoji.txt   others.txt
 # emoji.json - 该文件包含emoji表情的映射规则。OpenCC会根据这个json文件进行emoji的转换。
@@ -101,25 +97,37 @@ emoji:
   opencc_config: emoji.json
   inherit_comment: false                # 反查中，emoji 返回空注释
 
+# 编码输入预处理
 speller:
-  # 为了中英混输, 下面这一项注释
-  # max_code_length: 4                  # 四码上屏
-  auto_select: true                     # 四码唯一时，自动上屏
-  # auto_clear: max_length              # 空码时自动清空
+  auto_select: true                     # 候选唯一时，其对应编码输入完, 自动上屏, 有个问题, 三码只有唯一候选时, 会上屏, 这种时候只能添加一个重码
+  # max_code_length: 4                  # 输入码最多为四, 也就是四码上屏, 但为了中英混输, 这一项必须注释
+  # auto_clear: max_length              # 四码为空时, 输入码时自动清空, 永不启用
 
+# 五笔主翻译器设置
 translator:
   dictionary: wubi                      # 翻译器将调取此字典文件
-  enable_charset_filter: true           # 开启字符集过滤
-  enable_completion: true               # 是否显示编码未输入完整的词条, 也就是编码逐级显示
-  enable_sentence: false                # 句子输入模式
+  enable_completion: true               # 是否显示编码未输入完整的词条, 也就是编码逐级显示, 如果关闭, 上面的 auto_select 就必须关闭
   enable_user_dict: false               # 是否开启用户词典（用户词典记录动态字词频，用户词）
   enable_encoder: false                 # 关闭自动造词
+  enable_sentence: false                # 句子输入模式
   encode_commit_history: false          # 是否对已上屏词自动成词（仅 table_translator 有效）
-  enable_charset_filter: false          # 字符集过滤(只对 cjk 过滤器生效), cjk 要用则 true, 不用则 false.
+  enable_charset_filter: false          # extended_charset 开关, 前置开关. 这里为 true 上面 cjk 过滤才有用 
   preedit_format:                       # 输入编码自定义, 显示输入的字母, 则注释掉下面一行代码
     # - xform/.+//                      # 这个就是正则替换, $ 替换组
-  comment_format:                       # 候选注释自定义, 消除所有候选词后的提示码, 显示则注释下面一行代码
-    - xform/.+//                        
+  comment_format:                       # 候选注释自定义, 消除所有候选词后的提示码, 显示候选, 则注释下面一行代码
+    - xform/~(.+)/$1/                   # 这是只显示候选的字母, 不显示~
+    # - xform/.+//                      # 本来不应该注释的, 清空 comment 我写了个 lua 脚本来选择性清空
+
+# 挂载英文的 translator 设定 
+easy_en:                                               
+  dictionary: easy_en                   # 英文词库(id)
+  enable_encoder: false                 # 这四个都是关闭英文的自动造词       
+  enable_sentence: false 
+  encode_commit_history: false
+  enable_user_dict: false
+  # initial_quality: 1                  # 候选权重, 也就是优先级, 无须权重, 英文词库优先级最低 
+  comment_format:                       # 无需显示剩余的单词提示码
+    - xform/.+//
 
 # 简入繁出 通过 OpenCC 支持 github地址：https://github.com/BYVoid/OpenCC
 # 已集成在输入法程序中，在输入法程序目录的 opencc 目录下
@@ -131,52 +139,62 @@ translator:
 
 tradition:
   option_name: zh_trad         
-  opencc_config: s2hk.json     #  s2t.json | s2hk.json | s2tw.json | s2twp.json
-  tips: none                   # 转换提示: all 都显示 | char 仅单字显示 | none 不显示
+  opencc_config: s2hk.json     # s2t.json | s2hk.json | s2tw.json | s2twp.json
+  tags: [ abc ]                # 设置转换范围
+  tips: none                   # 设置注释是否显示转换前的字 转换提示: all 都显示 | char 仅单字显示 | none 不显示
 
 repeat_last_input:             # 重复上一次输入
-  input: z
-  size: 1
-  initial_quality: 1  
+  input: z                     # 激活键
+  size: 1                      # 记录过去的几次输入
+  initial_quality: 100         # 候选权重, 数值越大优先级越高
 
 reverse_lookup:
   dictionary: pinyin_simp      # 反查使用的拼音词库
   prefix: "z"                  # 反查前缀，以它为起点
   suffix: "'"                  # 反查后缀，以它为结点
-  tips: [拼音]                  # 反查时的提示信息
+  tags: [ pinyin_lookup ]      # 设置一个 tag 标签, 用于表示作用范围 
   preedit_format:
     - xform/([nl])v/$1ü/
     - xform/([nl])ue/$1üe/
     - xform/([jqxy])v/$1u/
+  comment_format:              # 提示码加上括号
+    - xform/$/ 〕/
+    - xform/^/〔 /
 
-key_binder:
+key_binder:                    # 按键绑定, 默认设置, 在 default.custom 中改
   import_preset: default
 
+# 自定义特殊按键功能, 需注意与 default.custom 中的快捷键冲突
+# 为什么不直接在 default.custom 写这个呢, 经测试 build 内可以生成配置项, 但不能生效
+# commit_comment  上屏注释
+# back_syllable	按音节回退  back 按字符回退  commit_raw_input 上屏原始编码  confirm 上屏候选 
+# cancel 取消輸入 noop 空  revert 撤消上次输入  delete_candidate 刪除候选项  delete 向后刪除
+editor:                 
+  bindings:
+    "Control+l": commit_comment           # ctrl + l 注释上屏
+
 # 标点符号
-# punctuator:
-#   import_preset: default
+punctuator:
+  import_preset: default
 # -----------------------------
 # punctuator 下面有三个子项：
 #     full_shape 全角标点映射
 #     half_shape 半角标点映射
 #     symbols    Rime 的预设配置是以 '/' 前缀开头输出一系列字符，自定义的 symbols_zi.yaml 修改成了 'zi' 开头
-# 下面是启用了, 上面被注释的是不启用, 启用后需在下方开启正则, 才能生效
+# 启用后需在下方开启正则(^zi([0-9a-zA-Z]+)$), 才能生效, symbols 以 'zi' 开头
 # __include 不是 yaml 的方法, rime 独有, : 前面是 yaml 文件名, 可以不包含 .yaml 后缀, 后面是被引用的节点
-
-punctuator:
-  full_shape:
-    __include: default:/punctuator/full_shape  # 从 default.yaml 导入配置
-  half_shape:
-    __include: default:/punctuator/half_shape  # 从 default.yaml 导入配置
-  symbols:
-    __include: symbols_zi:/symbols             # 从 symbols_zi.yaml 导入配置
+# -----------------------------
+# punctuator:
+#   full_shape:
+#     __include: default:/punctuator/full_shape  # 从软件自带的 default.yaml 导入配置
+#   half_shape:
+#     __include: default:/punctuator/half_shape  # 从软件自带的 default.yaml 导入配置
+#   symbols:
+#     __include: symbols_zi:/symbols             # 从用户目录内的 symbols_zi.yaml 导入配置
 
 recognizer:
-  import_preset: default
+  # import_preset: default                     # 导入默认预设好的配置, 注释后就不导入
   patterns:
-    reverse_lookup: "^z[a-z]*'?$"              # 反查词条的正则
-    punct: "^zi([0-9]|10|[a-z]+)$"             # symbols
-    xnumber: "^zv.*$"                          # 数字大写 与 计算器
-    unicode: "^zu([0-9a-z]*)$"                 # Unicode
-    linefeed: "^zo[a-z]*$"                     # Linefeed
-    # English: "^ze([a-z]|[A-Z])*$"            # 临时英文
+    reverse_lookup: "^z[a-zA-Z]*$"             # 反查
+    unicode: "^zu([0-9a-zA-Z]+)$"              # Unicode
+    xnumber: "^zv.*$"                          # 数字大写

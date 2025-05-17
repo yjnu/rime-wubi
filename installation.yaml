@@ -2,7 +2,7 @@ distribution_code_name: Weasel
 distribution_name: "小狼毫"
 distribution_version: 0.16.3
 install_time: "Wed Jul 10 23:16:32 2024"
-installation_id: RimeSync
+installation_id: Backup
 rime_version: 1.11.2
-sync_dir: "F:\\Dropbox"
+sync_dir: "F:\\Dropbox\\RimeSync"
 update_time: "Fri Oct 11 09:25:02 2024"

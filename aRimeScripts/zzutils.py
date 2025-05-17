@@ -6,6 +6,7 @@ import configparser
 import ctypes
 from ctypes import wintypes
 
+# 读取 config.ini 配置文件
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(SCRIPT_DIR, 'config.ini')
 CONFIG = configparser.ConfigParser()
@@ -57,6 +58,24 @@ def get_path(dicType):
     if dicType == "en":
         dict_path = re.sub(r'wubi', 'easy_en', dict_path)        
     return dict_path
+
+def get_user_dict_path():
+    """获取 rime 用户词库文件路径
+    
+    Args:
+        None
+
+    Returns:
+        str: 用户词库文件路径
+    """
+    dudictpath = CONFIG.get("udict_path", "d_udict_path")
+    eudictpath = CONFIG.get("udict_path", "e_udict_path")
+    name = os.environ.get("COMPUTERNAME")
+    if name == "R5-2600X":
+        user_dict_path = eudictpath
+    else:
+        user_dict_path = dudictpath
+    return user_dict_path
 
 def open_dict(dict_path):
     """打开 rime 词库文件

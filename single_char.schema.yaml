@@ -1,0 +1,93 @@
+# Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: single_char
+  name: "五笔单字"
+  version: "5.0"
+  icon: "image/wu_red.ico"
+  ascii_icon: "image/a_pink_neg.ico"
+  full_icon: "image/full_pink_neg.ico"
+  half_icon: "image/half_red.ico"                 
+  
+  author:
+    - 王永民 海峰
+  description: |
+    86五笔单字
+  dependencies:
+
+switches:
+  - name: ascii_mode                     
+    states: [ 中, En ]
+  - name: zh_trad                    
+    states: [ 简体, 繁体 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: ascii_punct
+    states: [ 。标点 ,. Punct ]
+  - name: extended_charset
+    reset: 1
+    states: [ 常用, 全集 ]    
+
+engine:                                                
+  processors:                                          
+    - ascii_composer
+    - recognizer                                       
+    - key_binder
+    - speller                                                                              
+    - punctuator                                       
+    - selector                                         
+    - navigator                                        
+    - express_editor                                   
+    # - lua_processor@*wubi_disable_soft_cursor          # 禁用输入字母的光标  #linux 报错
+  segmentors:                                          
+    - ascii_segmentor                                  
+    - matcher                                          
+    - abc_segmentor                                    
+    - punct_segmentor                                  
+    - fallback_segmentor
+  translators:
+    - punct_translator                           
+    - table_translator                            
+    - lua_translator@*wubi_helper                   
+    - history_translator@repeat_last_input         
+  filters:                                           
+    - simplifier@tradition                         
+    - uniquifier                                     
+
+speller:
+  auto_select: true
+
+translator:
+  dictionary: single_char
+  enable_completion: true       
+  enable_sentence: false         
+  enable_user_dict: false         
+  enable_encoder: false              
+  encode_commit_history: false        
+  enable_charset_filter: true      
+  preedit_format:               
+    # - xform/.+//                     
+  comment_format:
+    - xform/~(.+)/$1/                        
+
+tradition:
+  option_name: zh_trad         
+  opencc_config: s2hk.json     #  s2t.json | s2hk.json | s2tw.json | s2twp.json
+  tips: none                   # 转换提示: all 都显示 | char 仅单字显示 | none 不显示
+
+repeat_last_input:             # 重复上一次输入
+  input: z
+  size: 1
+  initial_quality: 100  
+
+key_binder:
+  import_preset: default
+
+punctuator:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "^z[a-z]*'?$"

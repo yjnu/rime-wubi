@@ -25,7 +25,7 @@ def print_help():
     print(f"用法: eedel <词组>")
 
     print("\n" + f"{GREEN}eelua{RESET} 添加生僻字")
-    print(f"用法: eelua <字>")
+    print(f"用法: eelua <字> <可选:注音>")
     
     print("\n---无参命令---\n" 
           f"{GREEN}eedep{RESET} 部署\n"

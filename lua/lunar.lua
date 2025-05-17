@@ -1,5 +1,9 @@
 -- 来源: https://github.com/boomker/rime-fast-xhup/blob/main/lua/chinese_lunar.lua
--- 输入 luna 或 lunar 后，输出农历日期
+-- 公历转农历, 两种方式
+-- 输入 luna 或 lunar 后，输出今天农历日期
+-- 输入 zv+八位数字 转换特定农历日期, 如: zv20250413
+
+
 
 -- 数字转中文
 local numerical_units = {
@@ -543,7 +547,7 @@ local function Date2LunarDate(Gregorian)
     Year = tonumber(Gregorian.sub(Gregorian, 1, 4))
     Month = tonumber(Gregorian.sub(Gregorian, 5, 6))
     Day = tonumber(Gregorian.sub(Gregorian, 7, 8))
-    if Year > 2100 or Year < 1899 or Month > 12 or Month < 1 or Day < 1 or Day > 31 or string.len(Gregorian) < 8 then
+    if Year > 2100 or Year < 1899 or Month > 12 or Month < 1 or Day < 1 or Day > 31 or string.len(Gregorian) < 8 then    
         return "无效日期"
     end
 
@@ -634,23 +638,30 @@ local function Date2LunarDate(Gregorian)
     return LunarDate, LunarDate2
 end
 
-local T = {}
--- 农历
-function T.func(input, seg, env)
+-- 农历转换主函数
+local function translator(input, seg, env)
     local composition = env.engine.context.composition
     if (composition:empty()) then return end
     local segment = composition:back()
 
-    local date1, date2 = Date2LunarDate(os.date("%Y%m%d"))
-    if (input == "luna" or input == "lunar") then
+    if (string.find(input, "^luna") ~= nil) then
+        local date1, date2 = Date2LunarDate(os.date("%Y%m%d"))
         segment.prompt = "〔" .. "农历" .. "〕"
-        local lunar_date = Candidate("lunar", seg.start, seg._end, date1, "")
-        lunar_date.quality = 999
-        yield(lunar_date)
-        local lunar_ymd = (Candidate("lunar", seg.start, seg._end, date2, ""))
-        lunar_ymd.quality = 999
-        yield(lunar_ymd)
+        -- local lunar_date = Candidate("lunar", seg.start, seg._end, date1, "")
+        -- lunar_date.quality = 100
+        -- yield(lunar_date)
+        yield(Candidate("lunar", seg.start, seg._end, date1, "农历干支"))
+        yield(Candidate("lunar", seg.start, seg._end, date2, "农历年月"))
+    elseif input:sub(1, 2) == "zv" then
+        if #input == 2 then
+            yield(Candidate("lunar", seg.start, seg._end, "农历转换", "八位数字"))
+        end
+        if input:sub(3):find("^%d%d%d%d%d%d%d%d$") then
+            local date1, date2 = Date2LunarDate(input:sub(3))
+            yield(Candidate("lunar", seg.start, seg._end, date1, "农历干支"))
+            yield(Candidate("lunar", seg.start, seg._end, date2, "农历年月"))
+        end
     end
 end
 
-return T
+return translator

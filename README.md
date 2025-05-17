@@ -1,35 +1,47 @@
 # rime 配置备份与分享
 
+## 背景
+
+最好用的五笔输入法是哪个，肯定是极点五笔，但极点五笔停止更新后，几乎不能在 Windows 11 上运行。Rime 通过配置能变成你想要的那个输入法，本配置的目标就是实现极点五笔的大部分功能并加以创新。
+
 ## 前言
 
 - rime 由于官方文档写的太差, 所以配置起来很难, 实际很简单, 所以这里分享一下我的配置, 让后来的人少踩坑. 
 - 只在 windows 平台上使用, 所以只分享 windows 平台的配置, 也就是小狼毫的配置.
 - 本配置是**五笔**配置, 所以拼音用户可以参考, 五笔用户直接上手换词库就行.
-- 由于词库有个人隐私信息, 所以五笔词库就不分享了. 再说五笔词库随人走, 相信你也有自己的词库
+- 由于词库有个人隐私信息, 所以词库不分享. 再说词库随人走, 相信你也有自己的词库
 
 ## 简要说明
+
 ### 自定义快捷键
 
-所有的功能都在这
+所有的功能都在这，都是输入法基本功能，不用多说
 
-- <kbd>zhelp</kbd>                      查看所有快捷键，不用背了
+- <kbd>help</kbd>                        键入 help 候选项显示所有快捷键
 - <kbd>Ctrl</kbd> + <kbd>Space</kbd>           中英文切换 （同微软五笔）
 - <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F4</kbd>   输入方案选择
 - <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F5</kbd>   最近两个方案来回切换
 - <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F6</kbd>   emoji 开关
-- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F7</kbd>   切换到五笔方案
-- <kbd>Ctrl</kbd> + <kbd> . </kbd>              中英标点符号切换 （同微软五笔）
-- <kbd>Shift</kbd> + <kbd>Space</kbd>         半角全角切换 （同微软五笔）
-- <kbd>Ctrl</kbd> + <kbd> \ </kbd>              简繁切换
-- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd> | </kbd>  常用过滤，默认打开
-- <kbd>Ctrl</kbd> + <kbd>Enter</kbd>           回车是清码
-- <kbd>zv</kbd>                          数字大写 与 计算器
-- <kbd>zu</kbd>                          Unicode 转换成汉字
-- <kbd>zi</kbd>                          symbol 符号
-- <kbd>zo</kbd>                          多行输出，在 lua 中配置
-- `zhelp`                      显示帮助
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F7</kbd>   切换到五笔单字方案
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F8</kbd>   动态候选词数量
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F9</kbd>   注释显隐
+- <kbd>Ctrl</kbd> + <kbd> . </kbd>                 中英标点符号切换
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>      半角全角切换 
+- <kbd>Ctrl</kbd> + <kbd> \ </kbd>                   简繁切换
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd> | </kbd>      常用过滤，默认打开
+- <kbd>zv</kbd>                             数字大写
+- <kbd>zu</kbd>                             Unicode 转换成汉字
+- <kbd>info</kbd>                          候选项显示 rime 信息
 - <kbd>time</kbd> <kbd>date</kbd> <kbd>dati</kbd> <kbd>week</kbd> <kbd>month</kbd>   输入时间
-- <kbd>lunar</kbd>                       农历
+- <kbd>lunar</kbd>                         农历
+- <kbd>Ctrl</kbd> + <kbd> H</kbd>          删除一个编码
+- <kbd>Ctrl</kbd> + <kbd> J </kbd>          光标下移
+- <kbd>Ctrl</kbd> + <kbd> K </kbd>          光标上移
+- <kbd>Ctrl</kbd> + <kbd> L </kbd>          注释上屏
+- <kbd>Ctrl</kbd> + <kbd> Enter </kbd>     清码
+- <kbd>Tab</kbd>                   向下翻页
+- <kbd>Shift</kbd> + <kbd>Tab</kbd>      向上翻页
+
 
 ### 中英文切换设定
 
@@ -46,6 +58,19 @@
 }
 ```
 
+中英切换其实也可以在 rime 中，通过 lua 实现，但 ahk 可以融合更多功能。
+
+### 四个方案说明
+
+总共有四个方案, 分别是
+1. 默认五笔, 只有常用字与词, 用于目常使用
+2. 五笔单字, 包含几乎所有汉字, 用于对五笔不能录入时的补充
+3. 拼音, 用于反查五笔
+4. 英文, 挂载到五笔中, 可实现输入英文单词
+
+### 配置总结
+五笔熟练用户上手就能用, 虽然有很多功能, 但都花里胡哨的, 比如: 注释上屏, 农历转换, 
+
 ## 词库加词与删词
 
 rime 加词与删词并不方便, 所以用 python 写了一个脚本, 加词与删词就很方便了. 补齐了 rime 唯一的短板.
@@ -59,8 +84,9 @@ rime 加词与删词并不方便, 所以用 python 写了一个脚本, 加词与
 - `eeadd 词` 添加词组
 - `eedel 词` 删除词组
 - `eemv 词` 改变词组顺序
-- `eelua 单字` 添加屏蔽字
+- `eelua 单字 <可选：注音>`  添加屏蔽字 或 注音
 - `eere 新词 被替换词` 替换词库中的词
+- `eehelp` 使用帮助
 
 命令操作的是主词库与英文词库, 用户词库与符号需手动修改
 
@@ -78,135 +104,21 @@ rime 加词与删词并不方便, 所以用 python 写了一个脚本, 加词与
 用法：
 
 - `Ctrl` + `Alt` + `+` 打开 ahk 窗口，已经预输入 eeadd
-
 - `Ctrl` + `D` 快速输入 eedel
 - `Ctrl` + `M` 快速输入 eemv
-
 - `Ctrl` + `H` 快速查看帮助
-- 默认回车运行命令，Esc 关闭窗口，或者切后台thf
+- 默认 Ctrl+回车 运行命令，Esc 关闭窗口，或者切后台自动关闭窗口
 
-![](./sample/ahk_1.jpg)
+![ahk界面](./sample/ahk_1.jpg)
 
-```ahk
-;## Ctrl + Alt + = 简易 cmd 命令输入器, 主要用来 rime 词库的更改
-^!=::
-{
-  myTitle := "AHKCMD"
-  AHKCMDGUI := Gui("+Resize", myTitle) ; ToolWindow不要标题栏, +Owner不显示任务栏icon, 会报错不能美观
+## 后记
 
-  AHKCMDGUI.OnEvent("Close", ExitAHKCMD)
+目前逐级显码与加减词不如极点五笔，前者因为 rime 自身原因，后者因为是外挂脚本, 加词需再输入一遍词, 删除词与调整候选位置不能直接用 Ctrl + 数字。要想改进, 只有从小狼毫源码入手改动，分支后有些bug会得不到修复，得不偿失，所以还是得外挂。
 
-  AHKCMDGUI.SetFont("s20", "霞鹜文楷等宽")
-  cmdInput := AHKCMDGUI.Add("Edit", "w500 vCommand", "eeadd ")
-  AHKCMDGUI.SetFont("s16", "Maple")
-  resultArea := AHKCMDGUI.Add("Edit", "w500 h300 ReadOnly")
+Rime 的使用体验，我认为是比极点五笔好的。极点虽是五笔输入法中的一座高峰，但那已是过去式。
 
-  AHKCMDGUI.Show()
+极点的很多功能是建立在单词库和一行一码对多词的基础上，词库大杂烩限制了词库的分享，现在五笔传播最广的词库还是二十年前的极爽词库。现在哪还有什么人用五笔啊，哪还需要分享词库啊，不过都是自嗨罢了。
 
-  Sleep 50
-  Send "{Right}"
+包括 win10 及之后的系统，就五笔输入法而言，能用的就三个，冰凌，rime和微软五笔，冰凌最大的问题是难看。而 rime 比微软五笔的皮肤好看，改词库更方便，还能自定义快捷键，最重要的是自定义词库，所以 Windows 平台，rime 就是目前最好用的输入法。
 
-  Hotkey "Esc", ExitAHKCMD, "On"
-  Hotkey "Enter", ExecuteCommand, "On"
-  Hotkey "^m", eemv, "On"
-  Hotkey "^r", eere, "On"
-  Hotkey "^d", eedel, "On"
-  Hotkey "^l", eelua, "On"
-  hotkey "^h", eehelp, "On"
-  hotkey "^p", eedep, "On"
-  hotkey "^s", eesync, "On"
-
-  eemv(*) {
-    cmdInput.Value := "eemv "
-    send "{End}"
-  }
-  eere(*) {
-    cmdInput.Value := "eere "
-    send "{End}"
-  }
-  eedel(*) {
-    cmdInput.Value := "eedel "
-    send "{End}"
-  }
-  eelua(*) {
-    cmdInput.Value := "eelua " 
-    send "{End}"
-  }
-  eehelp(*) {
-    cmdInput.Value := "eehelp"
-    send "{End}"
-    ExecuteCommand()
-  }
-  eedep(*) {
-    cmdInput.Value := "eedep"
-    send "{End}"
-    ExecuteCommand()
-  }
-  eesync(*) {
-    cmdInput.Value := "eesync"
-    send "{End}"
-    ExecuteCommand()
-    ; resultArea.Focus()
-  }
-
-  ExitAHKCMD(*) {
-    Hotkey "Esc", ExitAHKCMD, "Off"
-    Hotkey "Enter", ExecuteCommand, "Off"
-    Hotkey "^m", eemv, "Off"
-    Hotkey "^r", eere, "Off"
-    Hotkey "^d", eedel, "Off"
-    Hotkey "^l", eelua, "Off"
-    Hotkey "^h", eehelp, "Off"
-    Hotkey "^p", eedep, "Off"
-    Hotkey "^s", eesync, "Off"
-    SetTimer TimerExitGUI.Bind(myTitle), 0
-    if (AHKCMDGUI) {
-      AHKCMDGUI.Destroy()
-    }
-  }
-
-  SetTimer TimerExitGUI.Bind(myTitle), 1000
-
-  TimerExitGUI(myTitle) {
-    if !WinActive(myTitle) {
-      ExitAHKCMD()
-    }
-  }
-
-  ExecuteCommand(*) {
-    try {
-      command := cmdInput.Value
-      if (command = "") {
-        resultArea.Value := "错误：请输入命令"
-        return
-      }
-
-      ; shell := ComObject("WScript.Shell")
-      ; exec := shell.Exec("dir")
-      ; result := exec.StdOut.ReadAll()
-
-      tmpClip := A_Clipboard
-      A_Clipboard := ""
-      RunWait A_ComSpec " /C " command " | Clip", , "Min"
-      result := A_Clipboard
-
-      if (result = "") {
-        ; result := exec.StdErr.ReadAll()
-        result := A_Clipboard
-        if (result = "") {
-          result := "命令执行成功，但无输出内容"
-        } else {
-          result := "错误: `n" result
-        }
-      }
-      resultArea.Value := result
-      A_Clipboard := tmpClip
-    } catch Error as e {
-      resultArea.Value := "执行失败: `n" e.Message
-    }
-  }
-}
-```
-
- 
-
+rime 文档看了数遍，反复折腾了多次，此次更新后不会再大改 rime 配置文件了。

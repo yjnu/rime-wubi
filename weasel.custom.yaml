@@ -9,60 +9,72 @@ patch:
       inline_preedit: false                       # 行内显示不预编辑区, vim 开启输入中文,框不乱动
       ascii_punct: true                           # 默认为英文标点
       vim_mode: true                              # 按 Esc 或 <C-[> 退出 insert 模式时自动切换到 ascii mode
-    cursor.exe:
-      inline_preedit: false                       # cursor 配置同 vscode
-      ascii_punct: true
-      vim_mode: true
     # -----------以下程序, 默认启用中文------------------------------
     emeditor.exe: { ascii_mode: false }           # EmEditor
     typora.exe: { ascii_mode: false }             # Typora  
     obsidian.exe: { ascii_mode: false }           # Obsidian 
     chrome.exe: { ascii_mode: false }             # Chrome   
     winword.exe: { ascii_mode: false }            # word     
+    autohotkey64.exe: { ascii_mode: false }       # AutoHotkeyGUI
 
   global_ascii: false                             # 全局不同步 ascii 英文模式
   show_notifications: true                        # 中英切换显示通知图标
-  show_notifications_time: 300                    # 切换时, 图标显示时间
+  show_notifications_time: 350                    # 切换时, 图标显示时间, 走 R_shift 是 350 毫秒
 
   style:
     # 只能在这改配色方案, rime 提供改的地方不能改, 会重置文件, 影响配置文件可读性
     # 可同时配浅色与深色方案, 如果只配一个, darktheme 可注释掉
     # ----------------⇩📍📍📍📍📍⇩配色方案看这里-----------------------------------------
-    # 所有配色方案  Windowsdark    Roseo    Wechat                                         
-    color_scheme: Roseo                           # 浅色主题用竖排, 记得改下面的配置          
-    color_scheme_dark: Windowsdark                # 深色主题用横排, 记得改下面的配置          
-    horizontal: true                              # fale 竖排  true 横排                  
+    # 所有配色方案  Windowsdark  Rosered  Matrix  Wechat                                         
+    color_scheme: Rosered                         # 浅色主题用竖排, 记得改下面的配置          
+    # color_scheme_dark: Matrix                   # 深色主题用横排, 记得改下面的配置          
+    horizontal: false                             # false 竖排  true 横排                  
     # ----------------⇧📍📍📍📍📍⇧颜色方案看这里-----------------------------------------
-    label_format: "%s"                            # 序号后不显示小数点, 若要显示小数点, 注释此行
-    display_tray_icon: false                      # 不显示独立于语言栏的额外图标
+    fullscreen: false                             # 候选窗口全屏显示：true；false
+    vertical_text: false                          # 竖排文本：true；false
+    # text_orientation: horizontal                # 文本排列方向，效果和上一个 vertical_text 相同：horizontal；vertical
+    vertical_text_left_to_right: false            # 竖排方向是否从左到右：true；false
+    vertical_text_with_wrap: false                # 文本竖排模式下，自动换行：true；false
+    vertical_auto_reverse: false                  # 文本竖排模式下，候选窗口位于光标上方时倒序排列：true；false
+    
     inline_preedit: true                          # true 输入的字符嵌入编辑器内
+    preedit_type: composition                     # 预编辑区内容：composition（编码）； preview（选中的候选）；preview_all（全部候选）
+    
+    label_format: "%s"                            # 序号后不显示小数点, 若要显示小数点, 注释此行
+    display_tray_icon: false                      # 是否显示独立于语言栏的额外图标
+    mark_text: ""                                 # 标记字符，显示在选中的候选标签前，需要在配色方案中指定颜色；如该项为空字符串 "" 而配色方案中 hilited_mark_color 非透明色，则显示 Windows 11 输入法风格标记
+    ascii_tip_follow_cursor: false                # 切换 ASCII 模式时，提示跟随鼠标，而非输入光标
     enhanced_position: false                      # 无法定位候选框时，在窗口左上角显示候选框
-    ascii_tip_follow_cursor: false                # 切换 ASCII 模式时，提示是否跟随鼠标      
     antialias_mode: default                       # 次像素反锯齿设定 default force_dword cleartype grayscale aliased
     candidate_abbreviate_length: 0                # 候选项略写，超过此数字则用省略号代替。 0 表示不启用此功能
+
     hover_type: none                              # 鼠标在候选窗口悬停时的动作 none（无动作）hilite（选中候选）semi_hilite（高亮候选）
     paging_on_scroll: true                        # 候选窗口上滑动滚轮的行为 true（翻页）false（选中下一个候选）
     click_to_capture: false                       # 鼠标点击候选项，创建截图
-    font_face: "霞鹜文楷 屏幕阅读版, Segoe UI Emoji" 
-    font_point: 23                                
-    label_font_face: "霞鹜文楷 屏幕阅读版"           
-    label_font_point: 23
+    
+    # font_face: "霞鹜文楷等宽:0000:007F, Segoe UI Emoji, 霞鹜文楷"
+    font_face: "霞鹜文楷"
+    font_point: 22                                
+    # 标签字体
+    label_font_face: "霞鹜文楷"           
+    label_font_point: 18
+    # 注释字体
     comment_font_face: "霞鹜文楷 屏幕阅读版" 
     comment_font_point: 20  
+    
     layout:
-      baseline: 0                                 # https://github.com/rime/weasel/pull/1177
+      baseline: 0                                 # 字号百分比 https://github.com/rime/weasel/pull/1177
       linespacing: 0                              # 字号百分比, 同 baseline 一起设置可解决字体跳动问题，设置为 0 为禁用
       align_type: center                          # 标签, 候选和注释文字对齐方式 top center bottom
       min_height: 0                               # 候选框最小高度, 0 不启用此功能
       max_height: 0                               # 候选框最大高度, 0 不启用此功能
-      max_width: 1024                             # 候选框最大宽度, 0 不启用此功能
-      min_width: 110                              # 候选框最小宽度 
-      type: horizontal                            # 候选文字布局 horizontal(水平) vertical(竖直) vertical_text(文本竖直)
+      max_width: 0                                # 候选框最大宽度, 0 不启用此功能
+      min_width: 100                              # 候选框最小宽度 
       border_width: 1                             # 边框线宽
       margin_x: 9                                 # 输入的字母和候选框的左右边距，为负值时，不显示候选框
       margin_y: 5                                 # 输入的字母和候选框的上下边距，为负值时，不显示候选框
       spacing: 1                                  # 编码区域与候选区域之间的间距, inline_preedit 为 false 时生效
-      candidate_spacing: 6                        # 候选项之间的间距        
+      candidate_spacing: 5                        # 候选项之间的间距        
       hilite_spacing: 4                           # 序号和候选项, 候选和注释之间的间距 
       # hilite_padding: 3                         # 高亮区域和内部文字的间距，影响高亮区域大小
       hilite_padding_x: 5                         # 高亮区域和内部文字的左右(x), 上下(y)边距
@@ -72,7 +84,8 @@ patch:
       shadow_offset_x: 2                          # 阴影绘制的偏离距离
       shadow_offset_y: 2                          # 同上
       shadow_radius: 3                            # 阴影区域半径，为 0 不显示阴影；需要同时在配色方案中指定非透明的阴影颜色
-
+      # type: vertical                            # 候选文字布局，效果和 style 的设置相同, 同时设置会冲突
+                                                  # horizontal(横向) vertical(竖向) vertical_text(竖排文本) vertical+fullscreen(全屏) horizontal+fullscreen(横向全屏)
   # rime 色值不一样
   # 每8bit一组，从低位到高位分別代表Red、Green、Blue、Alpha，共32bit。其中 Alpha 是可选的, 不填为不透明.
   # 正常   #RRGGBB  或   #RRGGBBAA
@@ -81,8 +94,8 @@ patch:
   # color_format: rgba  # 颜色格式：argb（0xaarrggbb）；rgba（0xrrggbbaa）；abgr（0xaabbggrr 默认）
 
   preset_color_schemes:
-    Roseo: 
-      name: Roseo
+    Rosered: 
+      name: Rosered
       color_format: rgba                          # 声明颜色格式, 不写这句, 默认为 abgr
       text_color: 0x000000                        # 编码文字
       back_color: 0xFFFFFF                        # 编码背景
@@ -90,9 +103,24 @@ patch:
       shadow_color: 0x00000044                    # 编码阴影
       hilited_label_color: 0xFA114F88             # 选中序号
       hilited_candidate_text_color: 0xFA114F      # 选中文字
+      hilited_comment_text_color: 0x00DCC6        # 选中注释
+      label_color: 0xABABAB                       # 候选序号
       candidate_text_color: 0x000000              # 候选
       comment_text_color: 0x27CCBB                # 注释
       candidate_back_color: 0xFFFFFF              # 候选框背景
+    Matrix:
+      name: Matrix                                # 其实就是 WindowsDark 的简化版
+      color_format: rgba
+      text_color: 0xF9F9F9                        # 文字
+      back_color: 0x1C1C1C                        # 背景
+      border_color: 0x1C1C1C00                    # 边框
+      shadow_color: 0x00000020                    # 阴影
+      hilited_label_color: 0xDDDDDD               # 选中序号
+      hilited_text_color: 0xF9F9F9                # 选中文字
+      hilited_comment_text_color: 0x00DCC6        # 选中注释
+      label_color: 0x999999                       # 候选序号
+      candidate_text_color: 0xF9F9F9              # 候选
+      comment_text_color: 0x00DCC6                # 注释  
     Windowsdark:
       name: Windowsdark
       color_format: rgba
@@ -101,13 +129,13 @@ patch:
       border_color: 0x1C1C1C00                    # 边框
       shadow_color: 0x00000020                    # 阴影
       hilited_mark_color: 0x4CC2FF                # 选中候选最前面的符号颜色，注释则不显示
-      hilited_comment_text_color: 0x27CCBB        # 选中注释
-      hilited_text_color: 0xF9F9F9                # 选中文字
-      hilited_candidate_back_color: 0x2C2C2C      # 选中背景
       hilited_label_color: 0x888888               # 选中序号
+      hilited_text_color: 0xF9F9F9                # 选中文字
+      hilited_comment_text_color: 0x00DCC6        # 选中注释
+      hilited_candidate_back_color: 0x2C2C2C      # 选中背景
       label_color: 0x888888                       # 候选序号
       candidate_text_color: 0xF9F9F9              # 候选
-      comment_text_color: 0x27CCBB                # 注释
+      comment_text_color: 0x00DCC6                # 注释
     Wechat: 
       name: Wechat
       color_format: rgba
@@ -119,7 +147,7 @@ patch:
       hilited_back_color: 0xFFFFFF                # 候选框背景
       hilited_label_color: 0xFFFFFF               # 选中序号
       hilited_candidate_text_color: 0xFFFFFF      # 选中文字
-      hilited_comment_text_color: 0xFFFFFF        # 选中注释文字
+      hilited_comment_text_color: 0xFFFFFF        # 选中注释
       hilited_candidate_back_color: 0x22af79      # 选中背景
       label_color: 0x999999                       # 候选序号
       candidate_text_color: 0x000000              # 候选

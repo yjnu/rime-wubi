@@ -42,6 +42,7 @@ def addwubilex(word1, word2, word3, dicType):
                 if updated_vocab and updated_vocab[-1].strip().split("\t")[1] == word2:
                     count = int(updated_vocab[-1].strip().split("\t")[2]) + 1
                     updated_vocab.append(f"{word1}\t{word2}\t{count}\n")
+                    word3 = count
                 else:
                     updated_vocab.append(f"{word1}\t{word2}\t1\n")
                     word3 = 1
@@ -57,7 +58,7 @@ def addwubilex(word1, word2, word3, dicType):
         else:
             count = 1
         updated_vocab.append(f"{word1}\t{word2}\t{count}\n")
-
+        word3 = count
 
     # 重新写回文件
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:

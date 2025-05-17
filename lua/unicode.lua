@@ -1,6 +1,6 @@
 -- Unicode
 -- 示例：输入 zu62fc 得到「拼」
--- 额外功能: 输入 zi 提示 Symbols
+-- 额外功能: 输入 ob 提示 Symbols
 
 local function yieldCandidate(seg, text, desc)
     yield(Candidate("unicode", seg.start, seg._end, text, desc))
@@ -12,12 +12,12 @@ local function unicode(input, seg, env)
     local segment = composition:back()
 
     -- 与本功能无关, 给 Symbos 输入加入提示
-    if string.find(input, '^zi') ~= nil then
+    if string.find(input, '^ob') ~= nil then
         segment.prompt = "〔".. "Symbols".. "〕"
-        local symbols = string.sub(input, 3)
-        if #symbols == 0 then
-            yieldCandidate(seg, "Symbols 输入", "")
-        end
+        -- local symbols = string.sub(input, 3)
+        -- if #symbols == 0 then
+        --     yieldCandidate(seg, "Symbols 输入", "")
+        -- end
         return
     end
 
@@ -35,8 +35,9 @@ local function unicode(input, seg, env)
         end
 
         if #ucodestr > 0 and #ucodestr < 7 then
+            cnum = {"一", "二", "三"}
             if #ucodestr < 4 then
-                yieldCandidate(seg, #ucodestr .. " 个Unicode", "输入中~~~")
+                yieldCandidate(seg, "输入中~~~ " .. cnum[#ucodestr], ucodestr)
                 return
             end
             

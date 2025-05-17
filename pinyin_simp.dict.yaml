@@ -2,9 +2,6 @@
 # encoding: utf-8
 #
 # A minimal Pinyin dictionary for simplified Chinese script
-#
-# Derived from android open source project:
-# http://android.git.kernel.org/?p=platform/packages/inputmethods/PinyinIME.git
 ---
 name: pinyin_simp
 version: "1.0"
@@ -17012,11 +17009,6 @@ sort: by_weight
 儿	er	15408
 二	er	20319
 而	er	135908
-筽	o	13
-嚄	o	18
-喔	o	1939
-噢	o	7268
-哦	o	15582
 腢	ou	0
 慪	ou	1
 吘	ou	1
@@ -65120,7 +65112,3 @@ sort: by_weight
 二次开发	er ci kai fa	126
 二氧化碳	er yang hua tan	532
 二氧化硫	er yang hua liu	196
-欧美国家	ou mei guo jia	141
-欧洲国家	ou zhou guo jia	193
-欧洲市场	ou zhou shi chang	170
-宫保拼音	gong bao pin yin	100

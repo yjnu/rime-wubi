@@ -8,33 +8,37 @@
 patch:
   # 菜单中可选的方案列表，可根据喜好自行调整顺序，第一位为默认方案
   schema_list:
-    - schema: wubi                        # 五笔
-    # - schema: wubi091                   # 五笔 091
+    - schema: wubi                        # 五笔常用字词组
+    - schema: single_char                 # 五笔全集单字  
     - schema: pinyin_simp                 # 普通拼音
 
   menu:
-    page_size: 3       # 候选词数量，最多支持 10 个
-    # 修改候选项标签文字, 两种方案, 最多选一种, 可不选
+    page_size: 9                          # 候选词数量，最多支持 10 个
+    # 修改候选项序号, 只用选择一种即可, 或者用默认, 下面的都注释掉
+    # alternative_select_labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]           # 默认的 10 显示为 0 
     # alternative_select_labels: [①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨, ⑩]
-    # alternative_select_labels: [❶, ❷, ❸, ❹, ❺, ❻, ❼, ❽, ❾, ❿] 
+    # alternative_select_labels: [❶, ❷, ❸, ❹, ❺, ❻, ❼, ❽, ❾, ❿]
+    # alternative_select_labels: [⑴, ⑵, ⑶, ⑷, ⑸, ⑹, ⑺, ⑻, ⑼, ⑽]
+    # alternative_select_labels: [Ⓐ, Ⓑ, Ⓒ, Ⓓ, Ⓔ, Ⓕ, Ⓖ, Ⓗ, Ⓘ, Ⓙ]
+    # alternative_select_labels: [ⓐ, ⓑ, ⓒ, ⓓ, ⓔ, ⓕ, ⓖ, ⓗ, ⓘ, ⓙ]
 
   switcher:
     caption: "「方案选单」"
     hotkeys:
-      # - F4
-      - "Control+Shift+F4"
-    fold_options: false            # 呼出时方案子选项折叠开关，多方案时建议折叠 true ，一个方案建议展开 false
-    abbreviate_options: true       # 折叠时是否缩写选项
-    option_list_separator: ' | '   # 折叠时的选项分隔符
-    # save_options:                # 开关记忆，从方案选单 (非快捷键) 切换时记住的选项 (选项中不能有 reset) 
-    #   - ascii_punct
-    #   - traditionalization
-    #   - emoji
+      - Control+Shift+F4           # 快捷键可以设置多组, 我用一个就够了
+    fold_options: true             # 方案子选项折叠开关，建议: 多方案true  单方案false
+    abbreviate_options: true       # 折叠时是否缩写折叠的选项
+    option_list_separator: ' / '   # 折叠时的选项分隔符
+    save_options:                  # 开关记忆，从方案选单 (非快捷键) 切换大方案时记住的选项 (选项中不能有 reset) 
+      - zh_trad
+      - full_shape
+      - ascii_punct
+      - emoji
 
   #-----------------------------------------------
   # 中英文切换自定义
   #-----------------------------------------------
-  # inline_ascii  在输入法的临时英文编辑区内输入字母，数字，符号，空格等，回车上屏后自动复位到中文
+  # inline_ascii  在输入法的临时英文编辑区内输入字母，数字，符号，空格等，回车上屏后自动复位到中文, 最没用的功能
   # commit_text   候选中文上屏并切换至英文输入模式
   # commit_code   编码字符上屏并切换至英文输入模式
   # clear         清除拼音并切换至英文
@@ -42,17 +46,17 @@ patch:
   #-----------------------------------------------
 
   ascii_composer:
-    good_old_caps_lock: true       # true: CapsLock 切换大小写   false: 切换中英
+    good_old_caps_lock: true         # true: CapsLock 切换大小写   false: 切换中英
     switch_key:
-      Caps_Lock: commit_code       # 如果想用 Cap 键切换中英文输入，就修改为上面三种的任一一种，否则用 noop
+      Caps_Lock: commit_code
       Shift_L: noop
       Shift_R: commit_code         
       Control_L: noop 
       Control_R: noop
-      # Conrol_L+space: commit_code
+      # Conrol_L+space: commit_code  # Rime 目前还不支持, 真的蠢
   
   # 下面的 key_binder punctuator recognizer 写了一些所有方案通用的配置项
-  # 写在 default.yaml 里，方便多个方案引用，就是不用每个方案都写一遍
+  # 写在 default.yaml 里，方便多个方案引用，不用每个方案都写一遍
 
   #---------------------------------
   # 按键名速查在本文档最后，改键可参考 
@@ -61,33 +65,32 @@ patch:
   key_binder:
     bindings:
       # 候选字选择 ; '
-      - { when: has_menu, accept: semicolon, send: 2 }               # 候选2 用分号;
-      - { when: has_menu, accept: apostrophe, send: 3 }              # 候选3 用单引号'
+      - { when: has_menu, accept: semicolon, send: 2 }               # 候选2 用分号 ;
+      - { when: has_menu, accept: apostrophe, send: 3 }              # 候选3 用单引号 '
+      - { when: has_menu, accept: slash, send: 4 }                   # 候选4 用反斜杠 /
 
-      # 上下翻页    , .      - =     tab shift + tab
-      - { when: has_menu, accept: comma, send: Page_Up }             # 逗号向上翻页
-      - { when: has_menu, accept: period, send: Page_Down }          # 句号向下翻页
-      - { when: has_menu, accept: minus, send: Page_Up }             # - 向上翻页
-      - { when: has_menu, accept: equal, send: Page_Down }           # = 向下翻页
+      # 上下翻页         Tab / Shift + Tab
       - { when: has_menu, accept: Shift+Tab, send: Page_Up }         # shift + tab 向上翻页 
       - { when: has_menu, accept: Tab, send: Page_Down }             # tab 向下翻页 
+      # - { when: has_menu, accept: comma, send: Page_Up }           # , 逗号向上翻页
+      # - { when: has_menu, accept: period, send: Page_Down }        # 。 句号向下翻页
+      # - { when: has_menu, accept: minus, send: Page_Up }           # - 向上翻页
+      # - { when: has_menu, accept: equal, send: Page_Down }         # = 向下翻页
       # - { when: has_menu, accept: bracketleft, send: Page_Up }     # [ 向上翻页
       # - { when: has_menu, accept: bracketright, send: Page_Down }  # ] 向下翻页
-      # - { when: has_menu, accept: Control+Left, send: Page_Up }    # 左 向上翻页
-      # - { when: has_menu, accept: Control+Right, send: Page_Down } # 右 向下翻页
 
-      # 向下 / 上选 tab / shift + tab
-      # - { when: has_menu, accept: Shift+Tab, send: Up }
-      # - { when: has_menu, accept: Tab, send: Down }
-
-      # 五笔回车清码          Ctrl + Enter
-      - { when: composing, accept: Control+Return, send: Escape }
+      # Ctrl 快捷键操作
+      - { when: composing, accept: Control+h, send: BackSpace }      # Ctrl + h      删除一个字符
+      - { when: composing, accept: Control+j, send: Down }           # Ctrl + j      向下移动光标
+      - { when: composing, accept: Control+k, send: Up }             # Ctrl + k      向上移动光标
+      - { when: composing, accept: Control+Return, send: Escape }    # Ctrl + Enter  清空输入
+                                                                     # Ctrl + l      在五笔方案中写的, 功能: 注释上屏
 
       # 中英标点符号切换        Ctrl + .
       - { when: always, accept: Control+period, toggle: ascii_punct }
       
-      # 半角全角切换           Shift + Space
-      - { when: always, accept: Shift+space, toggle: full_shape }
+      # 半角全角切换           Control + Shift + Space 多加个 Ctrl 以免误按, 同时 AHK 设置 Shift + Space 直接输入全角空格
+      - { when: always, accept: Control+Shift+space, toggle: full_shape }
 
       # 简繁切换              Ctrl + \
       - { when: always, accept: Control+backslash, toggle: zh_trad }
@@ -95,15 +98,20 @@ patch:
       # 常用字过滤开关         Ctrl + Shift + |
       - { when: always, accept: Control+Shift+bar, toggle: character_filter }
      
+      # 最近用的两个方案互相切  Ctrl + Shift + F5
+      - { when: always, accept: Control+Shift+F5, select: .next }     
+
       # emoji 开关           Ctrl + Shift + F6
       - { when: always, accept: Control+Shift+F6, toggle: emoji }
 
-      # 最近两个方案互相切换       Ctrl + Shift + F5
-      # 我就两个方案，所以就是五笔与拼音互相切换
-      - { when: always, accept: Control+Shift+F5, select: .next }     
-
-      # 选择五笔方案          Ctrl + Shift + F7
-      - { when: always, accept: Control+Shift+F7, select: wubi }
+      # 选择五笔单字方案       Ctrl + Shift + F7
+      - { when: always, accept: Control+Shift+F7, select: single_char }
+     
+      # 候选词数量限制开关     Ctrl + Shift + F8
+      - { when: always, accept: Control+Shift+F8, toggle: only_three_candidates }
+      
+      # 清空注释开关           Ctrl + Shift + F9
+      - { when: always, accept: Control+Shift+F9, toggle: clear_comment }
 
       # 将小键盘 0~9 . 映射到主键盘，数字金额大写的 Lua 如 zv-1234.5678 可使用小键盘输入
       - { when: composing, accept: KP_0, send: 0 }
@@ -121,10 +129,12 @@ patch:
       - { when: composing, accept: KP_Multiply, send: asterisk }   # *
       - { when: composing, accept: KP_Divide, send: slash }        # /
       - { when: composing, accept: KP_Decimal, send: period }      # .
-      - { when: composing, accept: KP_Enter, send: Return }        # 回车
-  
-  # 设置为一个映射，就自动上屏；设置为多个映射，如 '/' : [ '/', ÷ ] 则进行复选。
-  # commit 的意思是这个符号输入时, 会将当前处于第一位的候选词上屏
+      - { when: composing, accept: KP_Enter, send: space }         # 回车发送空格, 相当于上屏, 输入金额时用
+
+
+  # 符号设置为一个映射，就自动上屏；设置为多个映射，如 '/' : [ '/', ÷ ] 则进行复选。
+  # commit 直接上屏, 不只有一个映射时, 也是直接上屏
+  # pair 交替上屏
   # full_shape: 全角没改，使用预设值
   # half_shape: 标点符号全部直接上屏, 有些不是中文符号
   #             '|' 是半角的，
@@ -202,17 +212,16 @@ patch:
       "?" : "？"
       "/" : "/"
 
-  # 在方案内已经配置好了, 这没啥好配的, 删除会报错, 留空
-  recognizer:
-    patterns:  # 一些常见的英文组合，当正则匹配到这些时，都不会生成候选词，而只输入英文
-      # email: "^[-_.0-9A-Za-z]+@.*$"
-      # url: "^(www[.]|https?:|ftp[.:]|mailto:|file:|localhost).*$|^[a-z]+[.].+$"
+recognizer:
+  patterns:                                         # 当正则匹配到这些时, 非词库中的编码也不会上屏
+    # uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"          # 大写可以留在输入法中
+
 
 # 按键速查
 # https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
 # （没有 Command 键，不支持）
 # accept 和 send 可用字段除 A-Za-z0-9 外，还包含以下键盘上实际有的键：
-# （区分大小写）
+# 注意: 区分大小写
 # BackSpace    退格
 # Tab          水平定位符
 # Linefeed     换行

@@ -5,7 +5,7 @@
 # easy_en - Easy English
 #
 # 6K 词汇，来源于考研与六级
-#
+# 开头行数不能变动, 词组从 19 行开始
 
 ---
 name: easy_en
@@ -80,6 +80,7 @@ across	across
 action	action
 activate	activate
 active	active
+ActiveX	activex
 activity	activity
 actor	actor
 actress	actress
@@ -103,7 +104,7 @@ admiration	admiration
 admire	admire
 admission	admission
 admit	admit
-adobe	adobe
+Adobe	adobe
 adolescent	adolescent
 adopt	adopt
 adoption	adoption
@@ -122,6 +123,7 @@ advice	advice
 advisable	advisable
 advise	advise
 advocate	advocate
+Aegis	aegis
 aerial	aerial
 aeroplane	aeroplane
 aerospace	aerospace
@@ -135,6 +137,7 @@ affluent	affluent
 afford	afford
 afraid	afraid
 after	after
+after effects	aftereffects
 afternoon	afternoon
 afterward	afterward
 again	again
@@ -152,11 +155,17 @@ agreeable	agreeable
 agreement	agreement
 agriculture	agriculture
 ahead	ahead
+ahk v2 	ahk
+ahk v2 	ahkv
 air-conditioning	air-conditioning
 aircraft	aircraft
 airline	airline
+AirPods	airpods
+AirPods Pro	airpodspro
 airport	airport
+AirPower	airpower
 aisle	aisle
+akko	akko
 alarm	alarm
 alas	alas
 album	album
@@ -250,6 +259,7 @@ anticipate	anticipate
 antique	antique
 anxiety	anxiety
 anxious	anxious
+any	any
 anybody	anybody
 anyhow	anyhow
 anyone	anyone
@@ -259,8 +269,11 @@ anywhere	anywhere
 Apache	apache
 apart	apart
 apartment	apartment
+API	api
+apk	apk
 apologise	apologise
 apology	apology
+app	app
 appal	appal
 apparatus	apparatus
 apparent	apparent
@@ -272,6 +285,7 @@ appetite	appetite
 applaud	applaud
 applause	applause
 apple	apple
+Apple	apple
 appliance	appliance
 applicable	applicable
 application	application
@@ -297,6 +311,7 @@ architect	architect
 architecture	architecture
 arctic	arctic
 area	area
+args	args
 argue	argue
 argument	argument
 arise	arise
@@ -534,6 +549,7 @@ bili	bili
 bill	bill
 billion	billion
 bind	bind
+bing	bing
 biography	biography
 biology	biology
 bird	bird
@@ -693,8 +709,6 @@ burn	burn
 burner	burner
 burst	burst
 bury	bury
-bush	bush
-bushel	bushel
 business	business
 busy	busy
 butcher	butcher
@@ -765,6 +779,7 @@ caress	caress
 cargo	cargo
 carpenter	carpenter
 carpet	carpet
+CarPlay	carplay
 carriage	carriage
 carrier	carrier
 carrot	carrot
@@ -845,6 +860,7 @@ chart	chart
 charter	charter
 chase	chase
 chat	chat
+chatgpt	chatgpt
 chatter	chatter
 cheap	cheap
 cheat	cheat
@@ -935,6 +951,7 @@ climax	climax
 climb	climb
 cling	cling
 clinic	clinic
+Clion	clion
 clip	clip
 cloak	cloak
 clock	clock
@@ -954,6 +971,9 @@ clue	clue
 clumsy	clumsy
 cluster	cluster
 clutch	clutch
+CMake	cmake
+cmd	cmd
+cmos	cmos
 coach	coach
 coal	coal
 coalition	coalition
@@ -1122,6 +1142,7 @@ console	console
 consolidate	consolidate
 conspicuous	conspicuous
 conspiracy	conspiracy
+const	const
 constant	constant
 constituent	constituent
 constitute	constitute
@@ -1199,6 +1220,7 @@ corrode	corrode
 corrupt	corrupt
 cosmic	cosmic
 cost	cost
+Costco	costco
 costly	costly
 costume	costume
 cosy	cosy
@@ -1225,8 +1247,8 @@ courtyard	courtyard
 cousin	cousin
 cover	cover
 coward	coward
-c++	cpp
 C++	cpp
+c++	cpp
 crab	crab
 crack	crack
 cradle	cradle
@@ -1309,7 +1331,6 @@ dash	dash
 data	data
 database	database
 dataview	dataview
-date	date
 datum	datum
 daughter	daughter
 dawn	dawn
@@ -1328,6 +1349,7 @@ dear	dear
 death	death
 debate	debate
 debt	debt
+debuff	debuff
 decade	decade
 decay	decay
 deceit	deceit
@@ -1353,8 +1375,8 @@ deduce	deduce
 deduct	deduct
 deed	deed
 deem	deem
-deep	deep
 deepen	deepen
+deepseek	deepseek
 deer	deer
 default	default
 defeat	defeat
@@ -1386,6 +1408,7 @@ delicious	delicious
 delight	delight
 deliver	deliver
 delivery	delivery
+Dell	dell
 demand	demand
 democracy	democracy
 democratic	democratic
@@ -1450,6 +1473,7 @@ detector	detector
 deteriorate	deteriorate
 determine	determine
 develop	develop
+development	development
 deviate	deviate
 deviation	deviation
 device	device
@@ -1577,6 +1601,7 @@ division	division
 divorce	divorce
 dizzy	dizzy
 Directory Opus	do
+doc	doc
 dock	dock
 doctor	doctor
 doctorate	doctorate
@@ -1598,11 +1623,13 @@ doorway	doorway
 dopus	dopus
 dorm	dorm
 dose	dose
+dota	dota
 double	double
 doubt	doubt
 doubtless	doubtless
 dove	dove
 down	down
+download	download
 downstairs	downstairs
 downtown	downtown
 downward	downward
@@ -1630,6 +1657,7 @@ drip	drip
 drive	drive
 driver	driver
 drop	drop
+Dropbox	dropbox
 drought	drought
 drown	drown
 drug	drug
@@ -1637,7 +1665,6 @@ drum	drum
 drunk	drunk
 dubious	dubious
 duck	duck
-duke	duke
 dull	dull
 dumb	dumb
 dump	dump
@@ -1692,9 +1719,12 @@ educate	educate
 education	education
 eeadd	eeadd
 eechange	eechange
+eedep	eedep
 eelua	eelua
+eemv	eemv
 eere	eere
 eesub	eesub
+eesync	eesync
 effect	effect
 effective	effective
 efficiency	efficiency
@@ -1739,6 +1769,7 @@ eloquence	eloquence
 eloquent	eloquent
 else	else
 elsewhere	elsewhere
+email	email
 embark	embark
 embarrass	embarrass
 embassy	embassy
@@ -1746,6 +1777,7 @@ embed	embed
 embody	embody
 embrace	embrace
 embroidery	embroidery
+emc	emc
 emeditor	emeditor
 emerge	emerge
 emergency	emergency
@@ -2095,8 +2127,6 @@ fireplace	fireplace
 firework	firework
 firm	firm
 firmness	firmness
-first	first
-first-rate	first-rate
 fish	fish
 fisherman	fisherman
 fission	fission
@@ -2105,6 +2135,7 @@ fitness	fitness
 fitting	fitting
 five	five
 fixture	fixture
+flac	flac
 flag	flag
 flake	flake
 flame	flame
@@ -2144,11 +2175,13 @@ flux	flux
 foam	foam
 focus	focus
 fold	fold
+foldersync	foldersync
 folk	folk
 follow	follow
 follower	follower
 following	following
 fond	fond
+foobar	foobar
 food	food
 fool	fool
 foolish	foolish
@@ -2314,6 +2347,7 @@ germ	germ
 German	german
 Germany	germany
 gesture	gesture
+Ghidra	ghidra
 ghost	ghost
 giant	giant
 gift	gift
@@ -2322,8 +2356,7 @@ gigantic	gigantic
 giggle	giggle
 ginger	ginger
 girl	girl
-github	git
-github	github
+GitHub	github
 give	give
 glad	glad
 glamor	glamor
@@ -2345,6 +2378,7 @@ glossary	glossary
 glove	glove
 glow	glow
 glue	glue
+Gmail	gmail
 gnaw	gnaw
 goal	goal
 goat	goat
@@ -2358,6 +2392,7 @@ goodness	goodness
 goods	goods
 Google	google
 goose	goose
+GoPro	gopro
 gorgeous	gorgeous
 gorilla	gorilla
 gossip	gossip
@@ -2482,7 +2517,6 @@ hardy	hardy
 harm	harm
 harmonious	harmonious
 harmony	harmony
-harness	harness
 harp	harp
 harsh	harsh
 harvest	harvest
@@ -2497,6 +2531,7 @@ haunt	haunt
 have	have
 hawk	hawk
 hazard	hazard
+HDR	hdr
 head	head
 headache	headache
 heading	heading
@@ -2529,7 +2564,6 @@ hell	hell
 hello	hello
 helmet	helmet
 help	help
-helpful	helpful
 hemisphere	hemisphere
 hence	hence
 henceforth	henceforth
@@ -2584,6 +2618,7 @@ home	home
 homely	homely
 homework	homework
 homogeneous	homogeneous
+Honda	honda
 honest	honest
 honey	honey
 honor	honor
@@ -2605,6 +2640,7 @@ host	host
 hostage	hostage
 hostess	hostess
 hostile	hostile
+hosts	hosts
 hotel	hotel
 hound	hound
 hour	hour
@@ -2670,6 +2706,7 @@ ignite	ignite
 ignorance	ignorance
 ignorant	ignorant
 ignore	ignore
+IKBC	ikbc
 illegal	illegal
 illiterate	illiterate
 illness	illness
@@ -2677,11 +2714,13 @@ illuminate	illuminate
 illusion	illusion
 illustrate	illustrate
 illustration	illustration
+illustrator	illustrator
 image	image
 imaginary	imaginary
 imagination	imagination
 imaginative	imaginative
 imagine	imagine
+IMAX	imax
 imitate	imitate
 imitation	imitation
 immediate	immediate
@@ -2898,6 +2937,7 @@ invention	invention
 inventory	inventory
 inverse	inverse
 inversely	inversely
+inversion	inversion
 invert	invert
 invest	invest
 investigate	investigate
@@ -2908,6 +2948,7 @@ invite	invite
 invoice	invoice
 involve	involve
 inward	inward
+IOS	ios
 iPad	ipad
 iPhone	iphone
 iPod	ipod
@@ -2952,7 +2993,7 @@ jeans	jeans
 jelly	jelly
 jerk	jerk
 Jesus	jesus
-jetbrains	jetbrains
+JetBrains	jetbrains
 jewel	jewel
 jewellery	jewellery
 jewelry	jewelry
@@ -2983,9 +3024,11 @@ justify	justify
 juvenile	juvenile
 keen	keen
 keep	keep
+keepass	keepass
 kernel	kernel
 kettle	kettle
 keyboard	keyboard
+keycode	keycode
 kick	kick
 kidnap	kidnap
 kidney	kidney
@@ -3004,6 +3047,7 @@ kingdom	kingdom
 kiss	kiss
 kitchen	kitchen
 kite	kite
+kjj	kjj
 knee	knee
 kneel	kneel
 knife	knife
@@ -3083,6 +3127,7 @@ least	least
 leather	leather
 leave	leave
 lecture	lecture
+LeetCode	leetcode
 left	left
 legacy	legacy
 legal	legal
@@ -3122,6 +3167,7 @@ lift	lift
 light	light
 lighter	lighter
 lightning	lightning
+lightspeed	lightspeed
 like	like
 likelihood	likelihood
 likely	likely
@@ -3147,7 +3193,6 @@ lion	lion
 lipstick	lipstick
 liquid	liquid
 liquor	liquor
-list	list
 listary	listary
 listen	listen
 literacy	literacy
@@ -3222,8 +3267,11 @@ luxurious	luxurious
 luxury	luxury
 lyric	lyric
 MacBook	macbook
+Macbook	macbook
+MacbookPro	macbookpro
 machine	machine
 machinery	machinery
+MacOS	macos
 madame	madame
 magazine	magazine
 magic	magic
@@ -3238,7 +3286,6 @@ magnitude	magnitude
 maid	maid
 maiden	maiden
 mail	mail
-main	main
 mainland	mainland
 maintain	maintain
 maintenance	maintenance
@@ -3307,6 +3354,8 @@ maximum	maximum
 maybe	maybe
 mayor	mayor
 McAfee	mcafee
+MCP	mcp
+MDict	mdict
 meadow	meadow
 meal	meal
 mean	mean
@@ -3410,13 +3459,13 @@ miracle	miracle
 mirror	mirror
 MiSans	misans
 mischief	mischief
+misdirection	misdirection
 miser	miser
 miserable	miserable
 misery	misery
 misfortune	misfortune
 mishief	mishief
 mislead	mislead
-miss	miss
 missile	missile
 missing	missing
 mission	mission
@@ -3427,6 +3476,7 @@ mistress	mistress
 misunderstand	misunderstand
 mitten	mitten
 mixer	mixer
+mixplorer	mixplorer
 mixture	mixture
 moan	moan
 mobile	mobile
@@ -3464,7 +3514,6 @@ monotonous	monotonous
 monster	monster
 monstrous	monstrous
 month	month
-monthly	monthly
 monument	monument
 mood	mood
 moon	moon
@@ -3506,6 +3555,7 @@ mpv	mpv
 mRNA	mrna
 mSATA	msata
 msdn	msdn
+msys2	msys
 msys	msys
 much	much
 multiple	multiple
@@ -3629,6 +3679,7 @@ notable	notable
 note	note
 notebook	notebook
 noted	noted
+notepad	notepad
 nothing	nothing
 notice	notice
 noticeable	noticeable
@@ -3687,6 +3738,7 @@ occupy	occupy
 occur	occur
 occurrence	occurrence
 ocean	ocean
+ocr	ocr
 October	october
 odds	odds
 odor	odor
@@ -3705,6 +3757,7 @@ OLED	oled
 olive	olive
 omit	omit
 once	once
+onenote	onenote
 oneself	oneself
 onetab	onetab
 onion	onion
@@ -3713,6 +3766,7 @@ onto	onto
 onward	onward
 opaque	opaque
 open	open
+OpenCV	opencv
 opening	opening
 opera	opera
 operate	operate
@@ -3819,6 +3873,7 @@ pacific	pacific
 pack	pack
 package	package
 packet	packet
+pacman	pacman
 pact	pact
 paddle	paddle
 page	page
@@ -3894,6 +3949,7 @@ pause	pause
 pave	pave
 pavement	pavement
 payment	payment
+pcb	pcb
 PCIe	pcie
 peace	peace
 peaceful	peaceful
@@ -3910,7 +3966,6 @@ peculiar	peculiar
 peculiarity	peculiarity
 pedal	pedal
 pedestrian	pedestrian
-pedlar	pedlar
 peel	peel
 peep	peep
 peer	peer
@@ -3979,6 +4034,7 @@ phone	phone
 photo	photo
 photoelectric	photoelectric
 photography	photography
+photoshop	photoshop
 phrase	phrase
 physical	physical
 physically	physically
@@ -4071,8 +4127,8 @@ pole	pole
 police	police
 policeman	policeman
 policy	policy
-polish	polish
 Polish	polish
+polish	polish
 polite	polite
 political	political
 politician	politician
@@ -4128,6 +4184,7 @@ poverty	poverty
 powder	powder
 power	power
 powerful	powerful
+PowerPoint	powerpoint
 practicable	practicable
 practical	practical
 practically	practically
@@ -4159,6 +4216,7 @@ pregnant	pregnant
 prejudice	prejudice
 preliminary	preliminary
 premier	premier
+premiere	premiere
 premise	premise
 premium	premium
 preparation	preparation
@@ -4296,6 +4354,7 @@ provision	provision
 provoke	provoke
 proxy	proxy
 prudent	prudent
+psu	psu
 psychiatry	psychiatry
 psychology	psychology
 public	public
@@ -4329,6 +4388,10 @@ pycharm	pycharm
 pyjamas	pyjamas
 pyramid	pyramid
 python	python
+pytorch	pytorch
+qbittorrent	qbittorrent
+qie	qie
+QQ	qq
 qualification	qualification
 qualify	qualify
 qualitative	qualitative
@@ -4456,6 +4519,7 @@ rectangle	rectangle
 rectify	rectify
 recur	recur
 recycle	recycle
+redmi	redmi
 reduce	reduce
 reduction	reduction
 redundant	redundant
@@ -4493,7 +4557,6 @@ regular	regular
 regularity	regularity
 regulate	regulate
 regulation	regulation
-rehearsal	rehearsal
 reign	reign
 rein	rein
 reinforce	reinforce
@@ -4890,6 +4953,7 @@ ship	ship
 shipment	shipment
 shirt	shirt
 shiver	shiver
+shizuku	shizuku
 shock	shock
 shoe	shoe
 shoot	shoot
@@ -4963,7 +5027,6 @@ skill	skill
 skilled	skilled
 skillful	skillful
 skim	skim
-skin	skin
 skip	skip
 skirt	skirt
 skull	skull
@@ -5068,6 +5131,7 @@ sovereign	sovereign
 space	space
 spacecraft	spacecraft
 spaceship	spaceship
+spacex	spacex
 spacious	spacious
 spade	spade
 Spain	spain
@@ -5172,7 +5236,6 @@ steady	steady
 steak	steak
 steal	steal
 steam	steam
-steamer	steamer
 steel	steel
 steep	steep
 steer	steer
@@ -5242,6 +5305,7 @@ stumble	stumble
 stun	stun
 stupid	stupid
 sturdy	sturdy
+stx	stx
 style	style
 subject	subject
 subjective	subjective
@@ -5278,7 +5342,6 @@ suicide	suicide
 suit	suit
 suitable	suitable
 suite	suite
-sulfur	sulfur
 summarize	summarize
 summary	summary
 summer	summer
@@ -5342,7 +5405,6 @@ sweet	sweet
 swell	swell
 swift	swift
 Swift	swift
-swim	swim
 swing	swing
 Swiss	swiss
 switch	switch
@@ -5377,6 +5439,7 @@ talent	talent
 talk	talk
 tall	tall
 tame	tame
+tampermonkey	tampermonkey
 tangle	tangle
 tank	tank
 tanker	tanker
@@ -5402,7 +5465,6 @@ telegram	telegram
 telegraph	telegraph
 telephone	telephone
 telescope	telescope
-telex	telex
 tell	tell
 temper	temper
 temperament	temperament
@@ -5420,6 +5482,7 @@ tennis	tennis
 tense	tense
 tensile	tensile
 tension	tension
+tensorflow	tensorflow
 tent	tent
 tentative	tentative
 tera	tera
@@ -5434,6 +5497,7 @@ terrify	terrify
 territory	territory
 terror	terror
 terrorist	terrorist
+tesla	tesla
 test	test
 testify	testify
 testimony	testimony
@@ -5526,6 +5590,7 @@ tile	tile
 till	till
 tilt	tilt
 timber	timber
+timestamp	timestamp
 timid	timid
 tiny	tiny
 tire	tire
@@ -5536,6 +5601,7 @@ title	title
 toad	toad
 toast	toast
 tobacco	tobacco
+toc	toc
 today	today
 todo	todo
 together	together
@@ -5586,6 +5652,7 @@ traffic	traffic
 tragedy	tragedy
 tragic	tragic
 trail	trail
+trailer	trailer
 train	train
 training	training
 trait	trait
@@ -5680,6 +5747,7 @@ twilight	twilight
 twin	twin
 twinkle	twinkle
 twist	twist
+twitter	twitter
 type	type
 Type-C	typec
 typewriter	typewriter
@@ -5739,6 +5807,7 @@ universal	universal
 universally	universally
 universe	universe
 university	university
+unix	unix
 unless	unless
 unlike	unlike
 unlikely	unlikely
@@ -5796,6 +5865,7 @@ variable	variable
 variation	variation
 variety	variety
 various	various
+varmilo	varmilo
 vary	vary
 vase	vase
 vast	vast
@@ -5841,6 +5911,7 @@ vigorous	vigorous
 vigour	vigour
 villa	villa
 village	village
+vim	vim
 vine	vine
 vinegar	vinegar
 violate	violate
@@ -5880,6 +5951,8 @@ vote	vote
 vowel	vowel
 voyage	voyage
 vscode	vscode
+VSCode	vscode
+VS Code	vscode
 VTuber	vtuber
 vue	vue
 vulgar	vulgar
@@ -5916,7 +5989,6 @@ wasp	wasp
 waste	waste
 wasteful	wasteful
 watch	watch
-watchful	watchful
 water	water
 waterfall	waterfall
 waterproof	waterproof
@@ -5941,10 +6013,8 @@ wedding	wedding
 wedge	wedge
 Wednesday	wednesday
 weed	weed
-week	week
 weekday	weekday
 weekend	weekend
-weekly	weekly
 weep	weep
 weigh	weigh
 weight	weight
@@ -6003,19 +6073,14 @@ wild	wild
 will	will
 willing	willing
 willow	willow
-wind	wind
-winding	winding
-windmill	windmill
-window	window
 Windows	windows
-windy	windy
 wine	wine
 wing	wing
 wink	wink
 winter	winter
 wipe	wipe
-Wire	wire
 wire	wire
+Wire	wire
 wisdom	wisdom
 wise	wise
 wish	wish
@@ -6029,6 +6094,8 @@ without	without
 withstand	withstand
 witness	witness
 witty	witty
+wjh	wjh
+wob	wob
 wolf	wolf
 woman	woman
 wonder	wonder
@@ -6068,8 +6135,10 @@ write	write
 writing	writing
 wrong	wrong
 wubi	wubi
-X-ray	x-ray
+XBox	xbox
 xerox	xerox
+xjm	xjm
+Xshell	xshell
 yacht	yacht
 yard	yard
 yawn	yawn
@@ -6089,5 +6158,6 @@ your	your
 yours	yours
 yourself	yourself
 youth	youth
-youtube	youtube
+YouTube	youtube
 yt-dlp	ytdlp
+Z-Library	zlibrary
