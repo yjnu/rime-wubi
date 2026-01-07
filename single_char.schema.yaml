@@ -49,7 +49,7 @@ engine:
   translators:
     - punct_translator                           
     - table_translator                            
-    - lua_translator@*wubi_helper                   
+    - lua_translator@*helper                   
     - history_translator@repeat_last_input         
   filters:                                           
     - simplifier@tradition                         
