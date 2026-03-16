@@ -1,4 +1,5 @@
 import pickle
+import os
 
 def load_wsdict(file_path):
     """从 Pickle 文件加载五笔编码字典"""
@@ -24,15 +25,21 @@ def write_pkl(file_path, wbdict):
     with open(file_path, 'wb') as f:
         pickle.dump(wbdict, f)
 
-def write_txt(file_path, wdict):
-    with open(file_path, 'w', encoding='utf-8') as f:
-        for key, value in wdict.items():
-            f.write(f"{key}\t{value}\n")
-
-
 if __name__ == "__main__":
-    wbdict = load_txt('f:/Dropbox/RimeSync/aRimeScripts/output.txt')
-    write_pkl('f:/Dropbox/RimeSync/aRimeScripts/wsdict.pkl', wbdict)
-    wdict = load_wsdict('f:/Dropbox/RimeSync/aRimeScripts/wsdict.pkl')
-    word = '有'
-    print(f"word: {wdict[word]}")
+    """ 
+       txt 是生成 txt
+       pkl 是生成 pkl
+       用法: 先生成 output.txt 修改后再生成 pkl 
+    """
+    switch = "txt"
+    
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    if switch == "pkl":
+        wbdict = load_txt(os.path.join(current_dir, 'output.txt'))
+        write_pkl(os.path.join(current_dir, 'wsdict.pkl'), wbdict)
+        wdict = load_wsdict(os.path.join(current_dir, 'wsdict.pkl'))
+    elif switch == "txt":
+        wdict = load_wsdict(os.path.join(current_dir, 'wsdict.pkl'))
+        write_txt(os.path.join(current_dir, 'output.txt'), wdict)
+        print("txt 已生成")
+        

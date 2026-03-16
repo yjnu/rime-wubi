@@ -26,12 +26,12 @@ def add_entry_to_lua_file(lua_file, entry, zhuyin=None):
         if zhuyin is None:
             print(f"word: {entry}")
         else:
-            print(f"word: {entry}\n注音: {zhuyin}")
+            print(f"word:    {entry}\ncomment: {zhuyin}")
     else:
         if zhuyin is None:
             print(f"\nword: \033[32m{entry}\033[0m")
         else:
-            print(f"\nword: \033[32m{entry}\033[0m\n注音: \033[32m{zhuyin}\033[0m")
+            print(f"\nword:    \033[32m{entry}\033[0m\ncomment: \033[32m{zhuyin}\033[0m")
 
 
 if __name__ == '__main__':
@@ -45,11 +45,11 @@ if __name__ == '__main__':
 
     entry = sys.argv[1]
     
-    lua_files = get_lua_path()
+    lua_file = get_lua_path()
     if len(sys.argv) == 2:
-        add_entry_to_lua_file(lua_files[0], entry)
+        add_entry_to_lua_file(lua_file, entry)
     else:
-        add_entry_to_lua_file(lua_files[0], entry, zhuyin)
+        add_entry_to_lua_file(lua_file, entry, zhuyin)
 
-    shutil.copy2(lua_files[0], lua_files[1])              # 手动备份
+    #shutil.copy2(lua_files[0], lua_files[1])              # 手动备份
 

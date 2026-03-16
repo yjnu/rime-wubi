@@ -1,11 +1,12 @@
 # 词库最后一定要空一行
 
 import sys
-from zzutils import detect_language, get_path, open_dict, get_wubi_code, get_active_window_exe
+from zzutils import CONFIG, detect_language, get_path, open_dict, get_wubi_code, get_active_window_exe
+
 
 
 def changewubilex(word1, word2, word3, dicType):
-    startline = 27
+    startline = CONFIG.getint("start_line", "wubi")
     new_entry = f"{word1}\t{word2}\t{word3}\n"       
     dict_path = get_path(dicType)
     lines = open_dict(dict_path)
@@ -21,7 +22,7 @@ def changewubilex(word1, word2, word3, dicType):
         # tmp += 1 
         if parts[1] < word2:
             pass
-        elif parts[1] == word2:# and len(parts) >= 3:
+        elif parts[1] == word2:     # and len(parts) >= 3:
             if parts[0] == word1:
                 if int(parts[2]) == int(word3):
                     print("\nError: The sorting remains unchanged ")
@@ -48,13 +49,21 @@ def changewubilex(word1, word2, word3, dicType):
     # print(updated_vocab)
     updated_vocab.sort(key=lambda x: (x.split("\t")[2]))
     count = 0
+    isfound = False
     for i, line in enumerate(updated_vocab):
         count += 1
         w1, w2, w3 = line.strip().split("\t")
-        if w1 == word1: 
+        if w1 == word1:
+            isfound = True
             word3 == w3
         updated_vocab[i] = f"{w1}\t{w2}\t{count}\n"
-
+    if not isfound:
+        if get_active_window_exe() == "AutoHotkey64":
+            print("Error: The word is not in the dictionary. \n")
+            sys.exit(1)
+        else:
+            print("\033[31mError:\033[0m The word is not in the dictionary. \n")
+            sys.exit(1)
     # 重新写回文件
     with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
         file.writelines(lines[:startline] + vocab_lines[:startnum] + updated_vocab + vocab_lines[endnum:])
@@ -94,7 +103,7 @@ if __name__ == "__main__":
     elif dicType == "zh":
         if detect_language(word3) == "number":
             word2 = get_wubi_code(word1)
-            print(f"\n输入词组： {word1} {word2} {word3}\n")
+            print(f"输入词组： {word1} {word2} {word3}\n")
             changewubilex(word1, word2, word3, dicType)
         else:
             print("\nError: the second parameter is not number")

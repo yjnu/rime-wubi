@@ -1,11 +1,12 @@
 # 注意: 词库最后一定要空一行
 
 import sys
-from zzutils import detect_language, get_path, open_dict, get_active_window_exe
+from zzutils import CONFIG, detect_language, get_path, open_dict, get_active_window_exe, remove_bracket
+
 
 
 def subwubilex(word1, dicType):
-    startline = 27
+    startline = CONFIG.getint("start_line", "wubi")
     dict_path = get_path(dicType)
     lines = open_dict(dict_path)
     vocab_lines = lines[startline:]
@@ -41,19 +42,21 @@ def subwubilex(word1, dicType):
     # print(f"endnum: {endnum}")
     # print(updated_vocab)
     if get_active_window_exe() == "AutoHotkey64":
-        print(f"deleted and sorted: {word1}")
+        print(f"Deleted and sorted: {word1}")
     else:
         print(f"\nsubtracted and sorted: \033[32m{word1}\033[0m")
 
 def subenlex(word1, dicType):
-    startline = 18
+    word1 = word1
+    startline = CONFIG.getint("start_line", "en")
     dict_path = get_path(dicType)
     lines = open_dict(dict_path)
     updated_vocab = lines[startline:]
     isfound = False
     for item in updated_vocab:
         key, _ = item.split("\t")
-        # if item.startswith(word1):
+        # 去除注释的方括号, 再比较纯英文
+        key = remove_bracket(key)        
         if key == word1:
             updated_vocab.remove(item)
             isfound = True

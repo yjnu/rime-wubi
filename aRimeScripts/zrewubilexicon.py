@@ -1,11 +1,12 @@
 # 词库最后一定要空一行
 
 import sys
-from zzutils import detect_language, get_path, open_dict, get_wubi_code, get_active_window_exe
+import re
+from zzutils import CONFIG, detect_language, get_path, open_dict, get_wubi_code, get_active_window_exe
 
 
 def rewubilex(word1, word2, dicType="zh"):
-    startline = 27     
+    startline = CONFIG.getint("start_line", "wubi")
     dict_path = get_path(dicType)
     lines = open_dict(dict_path)
     vocab_lines = lines[startline:]
@@ -29,8 +30,37 @@ def rewubilex(word1, word2, dicType="zh"):
     print(f"destword:   {word1}\n"
           f"sourceword: {word2}")
 
+def srewulex(word1, code):
+    startline = CONFIG.getint("start_line", "wubi")
+    dict_path = get_path("zh")
+    lines = open_dict(dict_path)
+    vocab_lines = lines[startline:]
+    isfound = False
+    word2 = ""
+    for index, line in enumerate(vocab_lines):
+        parts = line.strip().split("\t") 
+        if parts[1] == code and len(parts) >= 3:
+            isfound = True
+            word2 = parts[0]
+            vocab_lines[index] = f"{word1}\t{parts[1]}\t{parts[2]}\n"
+            break
+    if not isfound:
+        print("\nError: The second parameter must be in the dictionary")
+        sys.exit(1)
+
+    with open(dict_path, "w", encoding="utf-8", newline='\n') as file:
+        file.writelines(lines[:startline] + vocab_lines)
+
+    if get_active_window_exe() == "AutoHotkey64":
+        print("Successfully replaced")
+    else: 
+        print("\n\033[32mSuccessfully replaced\033[0m")
+    print(f"destword:   {word1}\n"
+          f"sourceword: {word2}")
+
+
 def reenlex(word1, word2, dicType="en"):
-    startline = 18      
+    startline = CONFIG.getint("start_line", "en")
     dict_path = get_path(dicType)
     lines = open_dict(dict_path)
     vocab_lines = lines[startline:]
@@ -40,6 +70,9 @@ def reenlex(word1, word2, dicType="en"):
         if parts[0] == word2:
             isfound = True
             vocab_lines[index] = f"{word1}\t{parts[1]}\n"
+        elif parts[0] == word2 + " ":
+            isfound = True
+            vocab_lines[index] = f"{word1} \t{parts[1]}\n"
     if not isfound:
         print("\nError: The second parameter must be in the dictionary")
         sys.exit(1)
@@ -59,10 +92,20 @@ if __name__ == "__main__":
     
     if len(sys.argv) == 3:
         word1, word2 = sys.argv[1], sys.argv[2]
+    elif len(sys.argv) == 2:
+        word1= sys.argv[1]
+        if detect_language(word1) == "zh":
+            code = get_wubi_code(word1)
+            srewulex(word1, code)
+            sys.exit(0)
+        else:
+            print("\nError: The first parameter must be Chinese")
+            sys.exit(1)
     else:
         print("\nOnly one usage replaced to the wubi dictionary: \n" 
               "python zvocabulary.py <destword> <sourceword>")
         sys.exit(1)
+
     dicType = detect_language(word1)
     if dicType == "number":
         print("\nError: Numbers cannot be added to dictionaries")
@@ -84,7 +127,11 @@ if __name__ == "__main__":
             sys.exit(1)
     else:
         word3 = word1.lower()
-        if word1.lower() == word2.lower():
+        word3 = ''.join(re.findall(r'[a-zA-Z]', word3))
+        word2 = word2.lower()
+        word2 = ''.join(re.findall(r'[a-zA-Z]', word2))
+
+        if word3 == word2:
             reenlex(word1, word2)
         else:
             print("\nError: The two word must be the same lowercase word")

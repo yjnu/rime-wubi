@@ -11,12 +11,17 @@ def print_help():
         RESET = "\033[0m"
     
     print("\n" + f"{GREEN}eeadd{RESET} 添加词组")
-    print(f"用法1: eeadd <词组> <释义>")
-    print(f"用法2: eeadd <词组>")
+    print(f"用法1: eeadd <中英词>")
+    print(f"用法2: eeadd <中英组> <code>")
+    print(f"用法3: eeadd <中英词> <释义>")
+    print(f"用法4: eeadd <中英词> <code> <序号>")
+    
+    print("\n" + f"{GREEN}eeuser{RESET} 添加用户词组")
+    print(f"用法: eeuser <词组> <code>")
     
     print("\n" + f"{GREEN}eemv{RESET} 改变词组候选位置")
-    print(f"用法1: eemv <词组> <候选位>")
-    print(f"用法2: eemv <词组>")
+    print(f"用法1: eemv <词组>  默认为1")
+    print(f"用法2: eemv <词组> <候选位>")
     
     print("\n" + f"{GREEN}eere{RESET} 替换词组")
     print(f"用法: eere <目标词组> <原词组>")
@@ -35,3 +40,4 @@ if __name__ == "__main__":
     # 设置标准输出编码为 UTF-8
     sys.stdout.reconfigure(encoding='utf-8')
     print_help()
+    
