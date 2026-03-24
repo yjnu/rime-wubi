@@ -12,6 +12,7 @@
 
 ---
 name: wubi_user
+version: "5.0"
 sort: original
 use_preset_vocabulary: false
 ...
