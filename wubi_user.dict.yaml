@@ -1,21 +1,25 @@
 # wubi user dict
+# vim: set sw=2 sts=2 et:
 # encoding: utf-8
-# 编码格式：字词 键码 权重 (中间是tab，不是空格)
-# '#'开头的只是注释， 注释只能另起一行写，不能在词条后面写
-# 为了更好调试与 emeditor 编辑，每组前用 ## 注释分组
+
+# 编码格式：
+#     字词 键码(中间是tab，不是空格)
+# 用户词库说明：
+#     1. '#'开头的只是注释， 注释只能另起一行写，不能在词条后面写
+#     2. 为了更好调试与 emeditor 编辑，每组前用 ## 注释分组
+#     3. "## 自造词" 这行不能变，靠这个定位用户词组
+#     4. 最后是"# no comment"，这行也不能变，这行之前还得空一行，之后的词可输入 #
+
 ---
 name: wubi_user
-version: "5.0"
-last_edit_time: "2024-07-13"
-dict_grouped: true                    # 词库管理应用识别：标记该码表为分组模式
-sort: original                            # by_weight / original 
-use_preset_vocabulary: false      # 是否引入【八股文】的词频词序
+sort: original
+use_preset_vocabulary: false
 ...
 ## 常用emoji
 🫵	obwy
-👉	obwy
-👈	obwy
-❌	obx
-💯	obb
-📍	pin
-🤡	chou
+
+## 自造词
+C++	cpp
+
+# no comment
+jlc.com/newOrder/#/collectCoupons	coupon
