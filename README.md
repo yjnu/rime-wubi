@@ -49,8 +49,8 @@
 
 如果要使用, 需要额外下载 ahk v2, 并写下面代码, 最后设置开机运行 ahk 脚本, 如果不会, 那就不配.
 
-```AHK
-; Ctrl + Space  输出 RShift  用来对rime输入法的补充
+```autohotkey
+; Ctrl + Space  输出 RShift  用来对 rime 输入法的补充
 ^Space::
 {
   KeyWait "Control"
