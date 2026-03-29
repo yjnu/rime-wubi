@@ -19,7 +19,7 @@ def load_txt(file_path):
 def write_txt(file_path, wdict):
     with open(file_path, 'w', encoding='utf-8') as f:
         for key, value in wdict.items():
-            f.write(f"{key}: {value}\n")
+            f.write(f"{key}\t{value}\n")
 
 def write_pkl(file_path, wbdict):
     with open(file_path, 'wb') as f:
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     if switch == "pkl":
         wbdict = load_txt(os.path.join(current_dir, 'output.txt'))
         write_pkl(os.path.join(current_dir, 'wsdict.pkl'), wbdict)
-        wdict = load_wsdict(os.path.join(current_dir, 'wsdict.pkl'))
+        print("pkl 已更新")
     elif switch == "txt":
         wdict = load_wsdict(os.path.join(current_dir, 'wsdict.pkl'))
         write_txt(os.path.join(current_dir, 'output.txt'), wdict)
